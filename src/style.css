@@ -1,5 +1,48 @@
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  --dkClr: #181818;
+  --liClr: #ede0d4;
+  --accClr: #0D035;
 }
 
+@font-face {
+    font-family: 'daydream'; /* A name you choose for your font */
+    src: url('public/assets/Daydream DEMO.otf')
+  }
 
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'daydream';
+}
+
+html, body{
+  height: 100%;
+}
+
+body{
+  background-color: var(--liClr);
+  color: var(--dkClr);
+  /* display: flex;
+  flex-direction: column; */
+  min-height: 100vh;
+}
+
+header, footer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+}
+
+main{
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#gameCanvas{
+  border: 1px solid var(--dkClr);
+}
