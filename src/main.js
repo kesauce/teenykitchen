@@ -25,37 +25,45 @@ class Kitchen extends Phaser.Scene{
     // Add the kitchen background
     this.add.image(0, 0, "bg").setOrigin(0, 0);
 
+    // ---------- ***** ---------- //
+
     // Sets the clickable fridge
     let fridgeZone = this.add.zone(155, 13, 32, 58);
     fridgeZone.setOrigin(0);
     fridgeZone.setInteractive({ useHandCursor: true }); // Uses a hand cursor
     let openFridgeImage;
+    let isFridgeOpen = false;
 
     fridgeZone.on('pointerdown', () => {
       console.log("Fridge clicked!");
-      openFridgeImage = this.add.image(146, 8, "openfridge").setOrigin(0, 0);
+      if (!isFridgeOpen){
+        openFridgeImage = this.add.image(146, 8, "openfridge").setOrigin(0, 0);
+        isFridgeOpen = true;
+      }
+      else{
+        openFridgeImage.destroy();
+        isFridgeOpen = false;
+      }
     });
+
+    // ---------- ***** ---------- //
 
     // Sets the clickable stove
     let stoveZone = this.add.zone(90, 31, 30, 14);
     stoveZone.setOrigin(0);
     stoveZone.setInteractive({ useHandCursor: true }); // Uses a hand cursor
     let stoveOnImage;
+    let isStoveOn = false;
 
     stoveZone.on('pointerdown', () => {
       console.log("Stove clicked!");
-      stoveOnImage = this.add.image(89, 31, "stoveon").setOrigin(0, 0);
-    });
-
-    // Check if user clicks outside interactables
-    this.input.on('pointerdown', (pointer, currentlyOver) => {
-      if (!currentlyOver.includes(fridgeZone)) {
-          console.log("Clicked outside the fridge!");
-          openFridgeImage.destroy();
+      if (!isStoveOn){
+        stoveOnImage = this.add.image(89, 31, "stoveon").setOrigin(0, 0);
+        isStoveOn = true;
       }
-      if (!currentlyOver.includes(stoveZone)) {
-          console.log("Clicked outside the stove!");
-          stoveOnImage.destroy();
+      else{
+        stoveOnImage.destroy();
+        isStoveOn = false;
       }
     });
 
