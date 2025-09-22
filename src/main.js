@@ -18,6 +18,7 @@ class Kitchen extends Phaser.Scene{
   preload(){
     this.load.image("bg", "/assets/kitchen/bg.png")
     this.load.image("openfridge", "/assets/kitchen/openfridge.png")
+    this.load.image("stoveon", "/assets/kitchen/stoveon.png")
   }
 
   create(){
@@ -35,11 +36,26 @@ class Kitchen extends Phaser.Scene{
       openFridgeImage = this.add.image(146, 8, "openfridge").setOrigin(0, 0);
     });
 
+    // Sets the clickable stove
+    let stoveZone = this.add.zone(90, 31, 30, 14);
+    stoveZone.setOrigin(0);
+    stoveZone.setInteractive({ useHandCursor: true }); // Uses a hand cursor
+    let stoveOnImage;
+
+    stoveZone.on('pointerdown', () => {
+      console.log("Stove clicked!");
+      stoveOnImage = this.add.image(89, 31, "stoveon").setOrigin(0, 0);
+    });
+
     // Check if user clicks outside interactables
     this.input.on('pointerdown', (pointer, currentlyOver) => {
       if (!currentlyOver.includes(fridgeZone)) {
           console.log("Clicked outside the fridge!");
           openFridgeImage.destroy();
+      }
+      if (!currentlyOver.includes(stoveZone)) {
+          console.log("Clicked outside the stove!");
+          stoveOnImage.destroy();
       }
     });
 
