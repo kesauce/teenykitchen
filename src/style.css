@@ -7,7 +7,12 @@
 
 @font-face {
     font-family: 'daydream'; /* A name you choose for your font */
-    src: url('public/assets/Daydream DEMO.otf')
+    src: url('/assets/Daydream DEMO.otf')
+  }
+
+@font-face {
+    font-family: 'retrogaming'; /* A name you choose for your font */
+    src: url('/assets/Retro Gaming.ttf')
   }
 
 *{
