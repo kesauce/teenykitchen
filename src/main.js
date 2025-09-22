@@ -16,9 +16,11 @@ class Kitchen extends Phaser.Scene{
   }
 
   preload(){
-    this.load.image("bg", "/assets/kitchen/bg.png")
-    this.load.image("openfridge", "/assets/kitchen/openfridge.png")
-    this.load.image("stoveon", "/assets/kitchen/stoveon.png")
+    this.load.image("bg", "/assets/kitchen/bg.png");
+    this.load.image("openfridge", "/assets/kitchen/openfridge.png");
+    this.load.image("stoveon", "/assets/kitchen/stoveon.png");
+    this.load.image("ovenon", "/assets/kitchen/ovenon.png");
+    this.load.image("sinkon", "/assets/kitchen/sinkon.png")
   }
 
   create(){
@@ -67,6 +69,47 @@ class Kitchen extends Phaser.Scene{
       }
     });
 
+    // ---------- ***** ---------- //
+
+    // Sets the clickable oven
+    let ovenZone = this.add.zone(91, 46, 29, 21);
+    ovenZone.setOrigin(0);
+    ovenZone.setInteractive({ useHandCursor: true});
+    let ovenOnImage;
+    let isOvenOn = false;
+
+    ovenZone.on('pointerdown', () => {
+      console.log("Oven clicked!");
+      if (!isOvenOn){
+        ovenOnImage = this.add.image(91, 46, "ovenon").setOrigin(0, 0);
+        isOvenOn = true;
+      }
+      else{
+        ovenOnImage.destroy();
+        isOvenOn = false;
+      }
+    });
+
+    // ---------- ***** ---------- //
+
+    // Sets the clickable oven
+    let sinkZone = this.add.zone(60, 30, 27, 14);
+    sinkZone.setOrigin(0);
+    sinkZone.setInteractive({ useHandCursor: true});
+    let sinkOnImage;
+    let isSinkOn = false;
+
+    sinkZone.on('pointerdown', () => {
+      console.log("Sink clicked!");
+      if (!isSinkOn){
+        sinkOnImage = this.add.image(57, 31, "sinkon").setOrigin(0, 0);
+        isSinkOn = true;
+      }
+      else{
+        sinkOnImage.destroy();
+        isSinkOn = false;
+      }
+    });
   }
 
   update(){
