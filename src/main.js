@@ -1,5 +1,9 @@
-import './style.css'
-import Phaser from 'phaser'
+import './style.css';
+import Phaser from 'phaser';
+import Fridge from './fridge.js';
+import Stove from './stove.js';
+import Oven from './oven.js';
+import Sink from './sink.js';
 
 // Creating constant variables
 const sizes = {
@@ -13,6 +17,11 @@ const speedDown = 300
 class Kitchen extends Phaser.Scene{
   constructor(){
     super("scene-game")
+
+    this.fridge;
+    this.stove;
+    this.oven;
+    this.sink;
   }
 
   preload(){
@@ -24,96 +33,26 @@ class Kitchen extends Phaser.Scene{
   }
 
   create(){
-    // Add the kitchen background
-    this.add.image(0, 0, "bg").setOrigin(0, 0);
-
     // ---------- ***** ---------- //
 
-    // Sets the clickable fridge
-    let fridgeZone = this.add.zone(155, 13, 32, 58);
-    fridgeZone.setOrigin(0);
-    fridgeZone.setInteractive({ useHandCursor: true }); // Uses a hand cursor
-    let openFridgeImage;
-    let isFridgeOpen = false;
+    this.CreateKitchen();
 
-    fridgeZone.on('pointerdown', () => {
-      console.log("Fridge clicked!");
-      if (!isFridgeOpen){
-        openFridgeImage = this.add.image(146, 8, "openfridge").setOrigin(0, 0);
-        isFridgeOpen = true;
-      }
-      else{
-        openFridgeImage.destroy();
-        isFridgeOpen = false;
-      }
-    });
-
-    // ---------- ***** ---------- //
-
-    // Sets the clickable stove
-    let stoveZone = this.add.zone(90, 31, 30, 14);
-    stoveZone.setOrigin(0);
-    stoveZone.setInteractive({ useHandCursor: true }); // Uses a hand cursor
-    let stoveOnImage;
-    let isStoveOn = false;
-
-    stoveZone.on('pointerdown', () => {
-      console.log("Stove clicked!");
-      if (!isStoveOn){
-        stoveOnImage = this.add.image(89, 31, "stoveon").setOrigin(0, 0);
-        isStoveOn = true;
-      }
-      else{
-        stoveOnImage.destroy();
-        isStoveOn = false;
-      }
-    });
-
-    // ---------- ***** ---------- //
-
-    // Sets the clickable oven
-    let ovenZone = this.add.zone(91, 46, 29, 21);
-    ovenZone.setOrigin(0);
-    ovenZone.setInteractive({ useHandCursor: true});
-    let ovenOnImage;
-    let isOvenOn = false;
-
-    ovenZone.on('pointerdown', () => {
-      console.log("Oven clicked!");
-      if (!isOvenOn){
-        ovenOnImage = this.add.image(91, 46, "ovenon").setOrigin(0, 0);
-        isOvenOn = true;
-      }
-      else{
-        ovenOnImage.destroy();
-        isOvenOn = false;
-      }
-    });
-
-    // ---------- ***** ---------- //
-
-    // Sets the clickable oven
-    let sinkZone = this.add.zone(60, 30, 27, 14);
-    sinkZone.setOrigin(0);
-    sinkZone.setInteractive({ useHandCursor: true});
-    let sinkOnImage;
-    let isSinkOn = false;
-
-    sinkZone.on('pointerdown', () => {
-      console.log("Sink clicked!");
-      if (!isSinkOn){
-        sinkOnImage = this.add.image(57, 31, "sinkon").setOrigin(0, 0);
-        isSinkOn = true;
-      }
-      else{
-        sinkOnImage.destroy();
-        isSinkOn = false;
-      }
-    });
+    
   }
 
   update(){
 
+  }
+
+  // ---------- ***** ---------- //
+  CreateKitchen(){
+    // Add the kitchen background
+    this.add.image(0, 0, "bg").setOrigin(0, 0);
+
+    this.fridge = new Fridge(this);
+    this.stove = new Stove(this);
+    this.oven = new Oven(this);
+    this.sink = new Sink(this);
   }
 }
 
