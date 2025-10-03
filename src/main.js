@@ -22,19 +22,28 @@ class Kitchen extends Phaser.Scene{
     this.stove;
     this.oven;
     this.sink;
+    
   }
 
   preload(){
+    // Preload kitchen items
     this.load.image("bg", "/assets/kitchen/bg.png");
     this.load.image("openfridge", "/assets/kitchen/openfridge.png");
     this.load.image("stoveon", "/assets/kitchen/stoveon.png");
     this.load.image("ovenon", "/assets/kitchen/ovenon.png");
-    this.load.image("sinkon", "/assets/kitchen/sinkon.png")
+    this.load.image("sinkon", "/assets/kitchen/sinkon.png");
+
+    // Preload ingredients
+    this.load.image("milk_bottle", "/assets/ingredients/milk_bottle.png");
+    this.load.image("egg_white", "/assets/ingredients/egg_white.png");
+
+    // Preload UI
+    this.load.image("cancel", "/assets/ui/cancel.png")
   }
 
   create(){
-    // ---------- ***** ---------- //
 
+    //this.IntialiseIngredients();
     this.CreateKitchen();
 
     
@@ -45,6 +54,8 @@ class Kitchen extends Phaser.Scene{
   }
 
   // ---------- ***** ---------- //
+  
+
   CreateKitchen(){
     // Add the kitchen background
     this.add.image(0, 0, "bg").setOrigin(0, 0);
@@ -56,6 +67,57 @@ class Kitchen extends Phaser.Scene{
   }
 }
 
+class FridgeMenu extends Phaser.Scene{
+  constructor() {
+    super({ key: 'FridgeMenu', active: false });
+    
+    this.items = [
+      { image: 'milk_bottle', name: 'Milk' },
+      { image: 'egg_white', name: 'Egg' },
+    ];
+  }
+
+  preload(){
+    // Load game font
+    this.load.bitmapFont('monogram', 'assets/fonts/monogram-bitmap.png', 'assets/fonts/monogram-bitmap.json')
+  }
+
+  create() {
+    // Add background and cancel button
+    this.add.rectangle(10, 10, (this.game.config.width) - 20, (this.game.config.height) - 20, 0xfadde1).setOrigin(0);
+    this.add.image(this.game.config.width - 19, 5, "cancel").setOrigin(0);
+
+    // Makes the cancel button clickable
+    let cancelZone = this.add.zone(this.game.config.width - 19, 5, 14, 14).setOrigin(0).setInteractive({ useHandCursor: true });
+
+    // If cancel is clicked then close the scene
+    cancelZone.on('pointerdown', () => {
+      this.scene.stop('FridgeMenu')
+      this.scene.resume('Kitchen')
+    });
+
+    // Add the label
+    this.add.bitmapText(10, 10, 'monogram', 'hello', 100)
+    
+    
+    // Starting position for the list
+    let startX = 30;
+    let startY = 30;
+    let spacingY = 40; // space between rows
+
+    // Display the ingredients
+    // this.items.forEach((item, index) => {
+    //   let y = startY + index * spacingY;
+
+    //   // Image
+    //   let icon = this.add.image(startX, y, item.image).setOrigin(0, 0);
+    //   icon.setDisplaySize(32, 32);
+
+    //   // Text
+    // });
+  }
+
+}
 
 // Setting up the game
 const config = {
@@ -63,22 +125,13 @@ const config = {
   width: sizes.width,
   height: sizes.height,
   canvas: gameCanvas,
-  physics:{
-    default: "arcade",
-    arcade:{
-      gravity:{y: speedDown},
-      debug: true
-    }
-  },
-
   pixelArt: true,   // keeps crisp edges
   scale: {
     mode: Phaser.Scale.NONE, // or Phaser.Scale.NONE
-    // autoCenter: Phaser.Scale.CENTER_BOTH,
     zoom: 3              // <-- upscale by 3
   },
 
-  scene: [Kitchen]
+  scene: [Kitchen, FridgeMenu]
 }
 
 // Running the game
