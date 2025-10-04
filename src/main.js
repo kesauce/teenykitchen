@@ -87,11 +87,11 @@ class FridgeMenu extends Phaser.Scene{
 
   create() {
     // Add background and cancel button
-    this.add.rectangle(10, 10, (this.game.config.width) - 20, (this.game.config.height) - 20, 0xfadde1).setOrigin(0);
-    this.add.image(this.game.config.width - 19, 5, "cancel").setOrigin(0);
+    this.add.rectangle(30, 30, (this.game.config.width) - 60, (this.game.config.height) - 60, 0xfadde1).setOrigin(0);
+    this.add.image(this.game.config.width - 54, 12, "cancel").setOrigin(0);
 
     // Makes the cancel button clickable
-    let cancelZone = this.add.zone(this.game.config.width - 19, 5, 14, 14).setOrigin(0).setInteractive({ useHandCursor: true });
+    let cancelZone = this.add.zone(this.game.config.width - 54, 12, 42, 42).setOrigin(0).setInteractive({ useHandCursor: true });
 
     // If cancel is clicked then close the scene
     cancelZone.on('pointerdown', () => {
@@ -100,9 +100,9 @@ class FridgeMenu extends Phaser.Scene{
     });
 
     // Add the label
-    this.add.text(10, 10, 'Fridge', {
+    this.add.text(30, 30, 'Fridge', {
       fontFamily: 'daydream', 
-      fontSize: '10px',
+      fontSize: '32px',
       color: '#000000'
     });
   }
