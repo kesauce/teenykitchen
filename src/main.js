@@ -16,7 +16,7 @@ const speedDown = 300
 // Setting up game scene
 class Kitchen extends Phaser.Scene{
   constructor(){
-    super("scene-game")
+    super({ key: "Kitchen" });
 
     this.fridge;
     this.stove;
@@ -46,7 +46,11 @@ class Kitchen extends Phaser.Scene{
     //this.IntialiseIngredients();
     this.CreateKitchen();
 
-    
+    // Ensuring my objects can be globally accessed
+    this.registry.set('fridge', this.fridge);
+    this.registry.set('stove', this.stove);
+    this.registry.set('oven', this.oven);
+    this.registry.set('sink', this.sink);
   }
 
   update(){
@@ -86,6 +90,9 @@ class FridgeMenu extends Phaser.Scene{
   }
 
   create() {
+    // Access global fridge object
+    const fridge = this.registry.get('fridge');
+    
     // Add background and cancel button
     this.add.rectangle(30, 30, (this.game.config.width) - 60, (this.game.config.height) - 60, 0xfadde1).setOrigin(0);
     this.add.image(this.game.config.width - 54, 12, "cancel").setOrigin(0);
@@ -95,14 +102,13 @@ class FridgeMenu extends Phaser.Scene{
 
     // If cancel is clicked then close the scene
     cancelZone.on('pointerdown', () => {
-      this.scene.stop('FridgeMenu')
-      this.scene.resume('Kitchen')
+      fridge.close();
     });
 
     // Add the label
-    this.add.text(30, 30, 'Fridge', {
+    this.add.text(40, 40, 'Fridge', {
       fontFamily: 'daydream', 
-      fontSize: '32px',
+      fontSize: '16px',
       color: '#000000'
     });
   }

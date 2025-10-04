@@ -28,7 +28,22 @@ export default class Fridge {
   }
 
   open() {
+    // Disable fridge clicks and hover
+    this.zone.disableInteractive();
+    this.scene.input.setDefaultCursor('default');
+
+    // Launch scene
+    this.scene.scene.pause("Kitchen");
     this.scene.scene.launch("FridgeMenu");
   }
 
+  close(){
+    // Re-enable fridge clicks and hover
+    this.zone.setInteractive({ useHandCursor: true });
+    this.scene.input.setDefaultCursor('default');
+
+    // Resume scene
+    this.scene.scene.stop("FridgeMenu");
+    this.scene.scene.resume("Kitchen");
+  }
 }
