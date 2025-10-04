@@ -7,8 +7,8 @@ export default class Fridge {
     this.menu;
 
     // Sets the clickable fridge
-    this.zone = scene.add.zone(155, 13, 32, 58).setOrigin(0).setInteractive({ useHandCursor: true });
-    this.openImage = scene.add.image(146, 8, "openfridge").setOrigin(0, 0).setVisible(false);
+    this.zone = scene.add.zone(465, 39, 96, 183).setOrigin(0).setInteractive({ useHandCursor: true });
+    this.openImage = scene.add.image(444, 39, "openfridge").setOrigin(0, 0).setVisible(false);
 
     // Opens menu when clicked
     this.zone.on('pointerdown', () => {

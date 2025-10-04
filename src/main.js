@@ -7,8 +7,8 @@ import Sink from './sink.js';
 
 // Creating constant variables
 const sizes = {
-  width: 256,
-  height: 180
+  width: 768,
+  height: 540
 }
 
 const speedDown = 300
@@ -58,7 +58,12 @@ class Kitchen extends Phaser.Scene{
 
   CreateKitchen(){
     // Add the kitchen background
-    this.add.image(0, 0, "bg").setOrigin(0, 0);
+    let bg = this.add.image(0, 0, "bg").setOrigin(0, 0);
+    
+    bg.setScale(
+      this.cameras.main.width / bg.width,
+      this.cameras.main.height / bg.height
+    );
 
     this.fridge = new Fridge(this);
     this.stove = new Stove(this);
@@ -78,8 +83,6 @@ class FridgeMenu extends Phaser.Scene{
   }
 
   preload(){
-    // Load game font
-    this.load.bitmapFont('monogram', 'assets/fonts/monogram-bitmap.png', 'assets/fonts/monogram-bitmap.json')
   }
 
   create() {
@@ -97,24 +100,11 @@ class FridgeMenu extends Phaser.Scene{
     });
 
     // Add the label
-    this.add.bitmapText(10, 10, 'monogram', 'hello', 100)
-    
-    
-    // Starting position for the list
-    let startX = 30;
-    let startY = 30;
-    let spacingY = 40; // space between rows
-
-    // Display the ingredients
-    // this.items.forEach((item, index) => {
-    //   let y = startY + index * spacingY;
-
-    //   // Image
-    //   let icon = this.add.image(startX, y, item.image).setOrigin(0, 0);
-    //   icon.setDisplaySize(32, 32);
-
-    //   // Text
-    // });
+    this.add.text(10, 10, 'Fridge', {
+      fontFamily: 'daydream', 
+      fontSize: '10px',
+      color: '#000000'
+    });
   }
 
 }
@@ -126,10 +116,6 @@ const config = {
   height: sizes.height,
   canvas: gameCanvas,
   pixelArt: true,   // keeps crisp edges
-  scale: {
-    mode: Phaser.Scale.NONE, // or Phaser.Scale.NONE
-    zoom: 3              // <-- upscale by 3
-  },
 
   scene: [Kitchen, FridgeMenu]
 }

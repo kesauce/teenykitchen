@@ -7,8 +7,8 @@ export default class Oven {
     this.menu;
 
     // Sets the clickable stove
-    this.zone = scene.add.zone(60, 30, 27, 14).setOrigin(0).setInteractive({ useHandCursor: true });
-    this.openImage = scene.add.image(57, 31, "sinkon").setOrigin(0, 0).setVisible(false);
+    this.zone = scene.add.zone(180, 93, 84, 48).setOrigin(0).setInteractive({ useHandCursor: true });
+    this.openImage = scene.add.image(180, 93, "sinkon").setOrigin(0, 0).setVisible(false);
 
     // Opens menu when clicked
     this.zone.on('pointerdown', () => {
