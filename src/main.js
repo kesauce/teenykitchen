@@ -36,6 +36,10 @@ class Kitchen extends Phaser.Scene{
     // Preload ingredients
     this.load.image("milk_bottle", "/assets/ingredients/milk_bottle.png");
     this.load.image("egg_white", "/assets/ingredients/egg_white.png");
+    this.load.image("banana", "/assets/ingredients/banana.png");
+    this.load.image("butter", "/assets/ingredients/butter.png");
+    this.load.image("red_apple", "/assets/ingredients/red_apple.png");
+    this.load.image("flour", "/assets/ingredients/flour.png");
 
     // Preload UI
     this.load.image("cancel", "/assets/ui/cancel.png")
@@ -80,9 +84,13 @@ class FridgeMenu extends Phaser.Scene{
   constructor() {
     super({ key: 'FridgeMenu', active: false });
     
-    this.items = [
-      { image: 'milk_bottle', name: 'Milk' },
-      { image: 'egg_white', name: 'Egg' },
+    this.ingredients = [
+      ['Milk', 'milk_bottle'],
+      ['Egg', 'egg_white'],
+      ['Apple', 'red_apple'],
+      ['Banana', 'banana'],
+      ['Butter', 'butter'],
+      ['Flour', 'flour']
     ];
   }
 
@@ -108,8 +116,21 @@ class FridgeMenu extends Phaser.Scene{
     // Add the label
     this.add.text(40, 40, 'Fridge', {
       fontFamily: 'daydream', 
-      fontSize: '16px',
+      fontSize: '25px',
       color: '#000000'
+    });
+
+    // Create a scrollable container and populate it with ingredients
+    console.log(this.ingredients);
+    let yAxis = 40;
+    let ingredientContainer = this.add.container(40, 50);
+    this.ingredients.forEach((item) => {
+      let icon = this.add.image(10, yAxis - 15, item[1]).setOrigin(0, 0).setScale(1.5);
+      let text = this.add.text(70, yAxis, item[0], { fontSize: '16px', color: '#000', fontFamily: 'daydream' });
+      ingredientContainer.add(text);
+      ingredientContainer.add(icon);
+
+      yAxis += 60;
     });
   }
 
