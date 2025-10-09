@@ -42,19 +42,23 @@ class Kitchen extends Phaser.Scene{
     this.load.image("flour", "/assets/ingredients/flour.png");
 
     // Preload UI
-    this.load.image("cancel", "/assets/ui/cancel.png")
+    this.load.image("cancel", "/assets/ui/cancel.png");
+    this.load.image("hotbar", "/assets/ui/hotbar.png");
+    this.load.image("select", "/assets/ui/select.png");
   }
 
   create(){
 
-    //this.IntialiseIngredients();
     this.CreateKitchen();
+    this.CreateUI();
 
-    // Ensuring my objects can be globally accessed
+    // Ensuring objects can be globally accessed
     this.registry.set('fridge', this.fridge);
     this.registry.set('stove', this.stove);
     this.registry.set('oven', this.oven);
     this.registry.set('sink', this.sink);
+
+
   }
 
   update(){
@@ -77,6 +81,11 @@ class Kitchen extends Phaser.Scene{
     this.stove = new Stove(this);
     this.oven = new Oven(this);
     this.sink = new Sink(this);
+  }
+
+  CreateUI(){
+    // Adding the hotbar to the screen
+    this.add.image(15, sizes.height - 82, "hotbar").setOrigin(0, 0);
   }
 }
 
@@ -102,7 +111,7 @@ class FridgeMenu extends Phaser.Scene{
     const fridge = this.registry.get('fridge');
     
     // Add background and cancel button
-    this.add.rectangle(30, 30, (this.game.config.width) - 60, (this.game.config.height) - 60, 0xfadde1).setOrigin(0);
+    this.add.rectangle(30, 30, (this.game.config.width) - 60, (this.game.config.height) - 120, 0xfadde1).setOrigin(0);
     this.add.image(this.game.config.width - 54, 12, "cancel").setOrigin(0);
 
     // Makes the cancel button clickable
@@ -122,15 +131,21 @@ class FridgeMenu extends Phaser.Scene{
 
     // Create a scrollable container and populate it with ingredients
     console.log(this.ingredients);
-    let yAxis = 40;
+    let yAxis = 50;
+    let xAxis = 10;
     let ingredientContainer = this.add.container(40, 50);
-    this.ingredients.forEach((item) => {
-      let icon = this.add.image(10, yAxis - 15, item[1]).setOrigin(0, 0).setScale(1.5);
-      let text = this.add.text(70, yAxis, item[0], { fontSize: '16px', color: '#000', fontFamily: 'daydream' });
+    this.ingredients.forEach((item, i) => {
+      let icon = this.add.image(xAxis, yAxis - 15, item[1]).setOrigin(0, 0).setScale(1.5);
+      let text = this.add.text(xAxis + 60, yAxis, item[0], { fontSize: '16px', color: '#000', fontFamily: 'daydream' });
       ingredientContainer.add(text);
       ingredientContainer.add(icon);
 
       yAxis += 60;
+
+      if(i % 5 == 0 && i != 0){
+        xAxis += 200;
+        yAxis = 50;
+      }
     });
   }
 
