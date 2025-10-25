@@ -111,11 +111,11 @@ class FridgeMenu extends Phaser.Scene{
     const fridge = this.registry.get('fridge');
     
     // Add background and cancel button
-    this.add.rectangle(30, 30, (this.game.config.width) - 60, (this.game.config.height) - 120, 0xfadde1).setOrigin(0);
-    this.add.image(this.game.config.width - 54, 12, "cancel").setOrigin(0);
+    this.add.rectangle(30, 30, (sizes.width) - 60, (sizes.height) - 120, 0xfadde1).setOrigin(0);
+    this.add.image(sizes.width - 54, 12, "cancel").setOrigin(0);
 
     // Makes the cancel button clickable
-    let cancelZone = this.add.zone(this.game.config.width - 54, 12, 42, 42).setOrigin(0).setInteractive({ useHandCursor: true });
+    let cancelZone = this.add.zone(sizes.width - 54, 12, 42, 42).setOrigin(0).setInteractive({ useHandCursor: true });
 
     // If cancel is clicked then close the scene
     cancelZone.on('pointerdown', () => {
@@ -129,6 +129,13 @@ class FridgeMenu extends Phaser.Scene{
       color: '#000000'
     });
 
+    // Display 
+    this.DisplayIngredients();
+
+    
+  }
+
+  DisplayIngredients(){
     // Create a scrollable container and populate it with ingredients
     console.log(this.ingredients);
     let yAxis = 50;
@@ -140,12 +147,21 @@ class FridgeMenu extends Phaser.Scene{
       ingredientContainer.add(text);
       ingredientContainer.add(icon);
 
-      yAxis += 60;
+      yAxis += 120;
 
       if(i % 5 == 0 && i != 0){
         xAxis += 200;
         yAxis = 50;
       }
+    });
+
+    // create scroll zone overlay
+    const scrollZone = this.add.zone(30, 50, sizes.width - 60, sizes.height - 120).setInteractive().setOrigin(0);
+
+    scrollZone.on('wheel', (pointer, dx, dy, dz) => {
+      console.log("scrolled");
+      const scrollSpeed = 0.5;
+      ingredientContainer.y -= dy * scrollSpeed;
     });
   }
 
