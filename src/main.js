@@ -35,11 +35,15 @@ class Kitchen extends Phaser.Scene{
 
     // Preload ingredients
     this.load.image("milk_bottle", "/assets/ingredients/milk_bottle.png");
-    this.load.image("egg_white", "/assets/ingredients/egg_white.png");
+    this.load.image("egg", "/assets/ingredients/egg_white.png");
     this.load.image("banana", "/assets/ingredients/banana.png");
     this.load.image("butter", "/assets/ingredients/butter.png");
     this.load.image("red_apple", "/assets/ingredients/red_apple.png");
     this.load.image("flour", "/assets/ingredients/flour.png");
+    this.load.image("sugar", "/assets/ingredients/sugar.png");
+    this.load.image("coffee", "/assets/ingredients/coffee_bag.png");
+    this.load.image("cocoa", "/assets/ingredients/hot_cocoa_mix.png");
+    this.load.image("yogurt", "/assets/ingredients/plain_yogurt.png");
 
     // Preload UI
     this.load.image("cancel", "/assets/ui/cancel.png");
@@ -95,11 +99,15 @@ class FridgeMenu extends Phaser.Scene{
     
     this.ingredients = [
       ['Milk', 'milk_bottle'],
-      ['Egg', 'egg_white'],
+      ['Egg', 'egg'],
       ['Apple', 'red_apple'],
       ['Banana', 'banana'],
       ['Butter', 'butter'],
-      ['Flour', 'flour']
+      ['Flour', 'flour'],
+      ['Sugar', 'sugar'],
+      ['Coffee', 'coffee'],
+      ['Cocoa Powder', 'cocoa'],
+      ['Yogurt', 'yogurt']
     ];
   }
 
@@ -147,12 +155,7 @@ class FridgeMenu extends Phaser.Scene{
       ingredientContainer.add(text);
       ingredientContainer.add(icon);
 
-      yAxis += 120;
-
-      if(i % 5 == 0 && i != 0){
-        xAxis += 200;
-        yAxis = 50;
-      }
+      yAxis += 60;
     });
     // Create a mask to prevent out of bound ingredients
     const maskShape = this.make.graphics(); maskShape.fillRect(40, 80, sizes.width - 60, sizes.height - 180); // (x, y, width, height) 
@@ -162,12 +165,12 @@ class FridgeMenu extends Phaser.Scene{
     // Create scroll zone overlay that moves the ingredient container up and down
     const scrollZone = this.add.zone(30, 50, sizes.width - 60, sizes.height - 120).setInteractive().setOrigin(0);
     scrollZone.on('wheel', (pointer, dx, dy, dz) => {
-      const scrollSpeed = 0.5;
+      const scrollSpeed = 0.25;
       ingredientContainer.y -= dy * scrollSpeed;
 
       // Create bounds to prevent overscrolling
       let maxY = 50;
-      let minY = 130 - ingredientContainer.getBounds().height; //50 offset + 80 mask height
+      let minY = sizes.height - 150 - ingredientContainer.getBounds().height;
 
       if (ingredientContainer.y > maxY) ingredientContainer.y = maxY;
       if (ingredientContainer.y < minY) ingredientContainer.y = minY;
