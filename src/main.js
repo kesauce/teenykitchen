@@ -44,6 +44,10 @@ class Kitchen extends Phaser.Scene{
     this.load.image("coffee", "/assets/ingredients/coffee_bag.png");
     this.load.image("cocoa", "/assets/ingredients/hot_cocoa_mix.png");
     this.load.image("yogurt", "/assets/ingredients/plain_yogurt.png");
+    this.load.image("potato", "/assets/ingredients/potato.png");
+    this.load.image("fish", "/assets/ingredients/fish.png");
+    this.load.image("strawberry", "/assets/ingredients/strawberry.png");
+    this.load.image("grape", "/assets/ingredients/red_grape.png");
 
     // Preload UI
     this.load.image("cancel", "/assets/ui/cancel.png");
@@ -107,7 +111,11 @@ class FridgeMenu extends Phaser.Scene{
       ['Sugar', 'sugar'],
       ['Coffee', 'coffee'],
       ['Cocoa Powder', 'cocoa'],
-      ['Yogurt', 'yogurt']
+      ['Yogurt', 'yogurt'],
+      ['Potato', 'potato'],
+      ['Fish', 'fish'],
+      ['Strawberry', 'strawberry'],
+      ['Grape', 'grape']
     ];
   }
 
