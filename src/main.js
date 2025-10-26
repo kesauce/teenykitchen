@@ -154,15 +154,27 @@ class FridgeMenu extends Phaser.Scene{
         yAxis = 50;
       }
     });
+    // Create a mask to prevent out of bound ingredients
+    const maskShape = this.make.graphics(); maskShape.fillRect(40, 80, sizes.width - 60, sizes.height - 180); // (x, y, width, height) 
+    const mask = maskShape.createGeometryMask(); 
+    ingredientContainer.setMask(mask);
 
-    // create scroll zone overlay
+    // Create scroll zone overlay that moves the ingredient container up and down
     const scrollZone = this.add.zone(30, 50, sizes.width - 60, sizes.height - 120).setInteractive().setOrigin(0);
-
     scrollZone.on('wheel', (pointer, dx, dy, dz) => {
-      console.log("scrolled");
       const scrollSpeed = 0.5;
       ingredientContainer.y -= dy * scrollSpeed;
+
+      // Create bounds to prevent overscrolling
+      let maxY = 50;
+      let minY = 130 - ingredientContainer.getBounds().height; //50 offset + 80 mask height
+
+      if (ingredientContainer.y > maxY) ingredientContainer.y = maxY;
+      if (ingredientContainer.y < minY) ingredientContainer.y = minY;
+      
     });
+
+    
   }
 
 }
