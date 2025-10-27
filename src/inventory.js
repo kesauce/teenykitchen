@@ -80,21 +80,10 @@ export default class Inventory {
             
         }
 
-        // // Display the select bar
-        // let selectionOffset = 30 + (this.selectedIngredient * 148)
-        // this.selectedIcon = this.scene.add.image(selectionOffset, 458, "select").setOrigin(0, 0);
-        // this.scene.tweens.add({
-        //     targets: this.selectedIcon,
-        //     alpha: 0,              // fade out
-        //     duration: 500,
-        //     yoyo: true,            // go back to alpha = 1
-        //     repeat: -1             // repeat forever
-        // });
-
     }
 
     increaseSelection(){
-        if (this.selectedIngredient < this.MAX_INGREDIENTS){
+        if (this.selectedIngredient < this.MAX_INGREDIENTS - 1){
             this.selectedIngredient += 1;
             this.displayInventory;
         }

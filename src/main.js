@@ -211,18 +211,44 @@ class Hotbar extends Phaser.Scene {
 	}
 
 	create(){
+		// Store the selected icon for destroying
+		this.selectedIcon;
+
 		// Grab the inventory class
 		this.inventory = this.registry.get('inventory');
 
+		this.keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
+		this.keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
+
+		this.inventory.displayInventory();
 		this.updateHotbar();
+		
+	}
+
+	update(){
+		// Check if W or D is clicked (A go left, D go right)
+		if (Phaser.Input.Keyboard.JustDown(this.keyA)) {
+			this.inventory.decreaseSelection();
+			this.updateHotbar();
+		}
+
+		if (Phaser.Input.Keyboard.JustDown(this.keyD)) {
+			this.inventory.increaseSelection();
+			this.updateHotbar();
+		}
+
+		
 	}
 
 	updateHotbar(){
-		// Display the select bar
-        let selectionOffset = 30 + (this.inventory.getSelected() * 148)
-        let selectedIcon = this.add.image(selectionOffset, 458, "select").setOrigin(0, 0);
+		// Destroy the previous select bar
+		if (this.selectedIcon) this.selectedIcon.destroy();
+
+		// Display the new select bar
+        let selectionOffset = 30 + (this.inventory.getSelected() * 146)
+        this.selectedIcon = this.add.image(selectionOffset, 458, "select").setOrigin(0, 0);
         this.tweens.add({
-            targets: selectedIcon,
+            targets: this.selectedIcon,
             alpha: 0,              // Fades out
             duration: 500,
             yoyo: true,            // Go back to alpha = 1
