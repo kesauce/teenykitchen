@@ -1,49 +1,49 @@
 export default class Fridge {
-  constructor(scene) {
+	constructor(scene) {
 
-    this.scene = scene;
-    this.zone;
-    this.openImage;
-    this.menu;
+		this.scene = scene;
+		this.zone;
+		this.openImage;
+		this.menu;
 
-    // Sets the clickable fridge
-    this.zone = scene.add.zone(465, 39, 96, 183).setOrigin(0).setInteractive({ useHandCursor: true });
-    this.openImage = scene.add.image(444, 39, "openfridge").setOrigin(0, 0).setVisible(false);
+		// Sets the clickable fridge
+		this.zone = scene.add.zone(465, 39, 96, 183).setOrigin(0).setInteractive({ useHandCursor: true });
+		this.openImage = scene.add.image(444, 39, "openfridge").setOrigin(0, 0).setVisible(false);
 
-    // Opens menu when clicked
-    this.zone.on('pointerdown', () => {
-      console.log("Fridge clicked!");
-      this.open();
-    });
+		// Opens menu when clicked
+		this.zone.on('pointerdown', () => {
+			console.log("Fridge clicked!");
+			this.open();
+		});
 
-    // Show open fridge when hovered
-    this.zone.on('pointerover', () => {
-      this.openImage.setVisible(true);
-    });
+		// Show open fridge when hovered
+		this.zone.on('pointerover', () => {
+			this.openImage.setVisible(true);
+		});
 
-    // Hide open fridge when not hovered
-    this.zone.on('pointerout', () => {
-      this.openImage.setVisible(false);
-    });
-  }
+		// Hide open fridge when not hovered
+		this.zone.on('pointerout', () => {
+			this.openImage.setVisible(false);
+		});
+	}
 
-  open() {
-    // Disable fridge clicks and hover
-    this.zone.disableInteractive();
-    this.scene.input.setDefaultCursor('default');
+	open() {
+		// Disable fridge clicks and hover
+		this.zone.disableInteractive();
+		this.scene.input.setDefaultCursor('default');
 
-    // Launch scene
-    this.scene.scene.pause("Kitchen");
-    this.scene.scene.launch("FridgeMenu");
-  }
+		// Launch scene
+		this.scene.scene.pause("Kitchen");
+		this.scene.scene.launch("FridgeMenu");
+	}
 
-  close(){
-    // Re-enable fridge clicks and hover
-    this.zone.setInteractive({ useHandCursor: true });
-    this.scene.input.setDefaultCursor('default');
+	close() {
+		// Re-enable fridge clicks and hover
+		this.zone.setInteractive({ useHandCursor: true });
+		this.scene.input.setDefaultCursor('default');
 
-    // Resume scene
-    this.scene.scene.stop("FridgeMenu");
-    this.scene.scene.resume("Kitchen");
-  }
+		// Resume scene
+		this.scene.scene.stop("FridgeMenu");
+		this.scene.scene.resume("Kitchen");
+	}
 }
