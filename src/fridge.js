@@ -12,7 +12,6 @@ export default class Fridge {
 
 		// Opens menu when clicked
 		this.zone.on('pointerdown', () => {
-			console.log("Fridge clicked!");
 			this.open();
 		});
 

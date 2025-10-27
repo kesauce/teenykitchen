@@ -12,7 +12,6 @@ export default class Stove {
 
 		// Opens menu when clicked
 		this.zone.on('pointerdown', () => {
-			console.log("Stove clicked!");
 			this.open();
 		});
 

@@ -12,7 +12,6 @@ export default class Oven {
 
 		// Opens menu when clicked
 		this.zone.on('pointerdown', () => {
-			console.log("Sink clicked!");
 			this.open();
 		});
 
