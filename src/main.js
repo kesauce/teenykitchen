@@ -4,6 +4,7 @@ import Fridge from './fridge.js';
 import Stove from './stove.js';
 import Oven from './oven.js';
 import Sink from './sink.js';
+import Inventory from './inventory.js';
 
 // Creating constant variables
 const sizes = {
@@ -21,6 +22,7 @@ class Kitchen extends Phaser.Scene {
 		this.stove;
 		this.oven;
 		this.sink;
+		this.inventory;
 
 	}
 
@@ -64,13 +66,11 @@ class Kitchen extends Phaser.Scene {
 		this.registry.set('stove', this.stove);
 		this.registry.set('oven', this.oven);
 		this.registry.set('sink', this.sink);
+		this.registry.set('inventory', this.inventory);
 
 
 	}
 
-	update() {
-
-	}
 
 	// ---------- ***** ---------- //
 
@@ -88,11 +88,14 @@ class Kitchen extends Phaser.Scene {
 		this.stove = new Stove(this);
 		this.oven = new Oven(this);
 		this.sink = new Sink(this);
+		this.inventory = new Inventory(this);
 	}
 
 	CreateUI() {
-		// Adding the hotbar to the screen
+		// Adding the hotbar and the select icon to the screen
 		this.add.image(15, sizes.height - 82, "hotbar").setOrigin(0, 0);
+		this.add.image(30, sizes.height - 82, "select").setOrigin(0, 0);
+
 	}
 }
 
@@ -116,6 +119,9 @@ class FridgeMenu extends Phaser.Scene {
 			['Strawberry', 'strawberry'],
 			['Grape', 'grape']
 		];
+		
+		this.fridge;
+		this.inventory;
 	}
 
 	preload() {
@@ -123,8 +129,21 @@ class FridgeMenu extends Phaser.Scene {
 
 	create() {
 		// Access global fridge object
-		const fridge = this.registry.get('fridge');
+		this.fridge = this.registry.get('fridge');
+		this.inventory = this.registry.get('inventory');
 
+		this.InitialiseFridgeMenu();
+		this.DisplayIngredients();
+
+		//test to add ingredient
+		this.inventory.addIngredient('Milk', 1, 'milk_bottle');
+		this.inventory.printIngredients();
+		this.inventory.displayInventory();
+
+
+	}
+
+	InitialiseFridgeMenu(){
 		// Add background and cancel button
 		this.add.rectangle(30, 30, (sizes.width) - 60, (sizes.height) - 120, 0xfadde1).setOrigin(0);
 		this.add.image(sizes.width - 54, 12, "cancel").setOrigin(0);
@@ -134,7 +153,7 @@ class FridgeMenu extends Phaser.Scene {
 
 		// If cancel is clicked then close the scene
 		cancelZone.on('pointerdown', () => {
-			fridge.close();
+			this.fridge.close();
 		});
 
 		// Add the label
@@ -143,16 +162,10 @@ class FridgeMenu extends Phaser.Scene {
 			fontSize: '25px',
 			color: '#000000'
 		});
-
-		// Show all ingredients and handle click events
-		this.DisplayIngredients();
-
-
 	}
 
 	DisplayIngredients() {
 		// Create a scrollable container and populate it with ingredients
-		console.log(this.ingredients);
 		let yAxis = 50;
 		let xAxis = 10;
 		let ingredientContainer = this.add.container(40, 50);
