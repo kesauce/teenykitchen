@@ -7,15 +7,16 @@ export default class Inventory {
         this.ingredientsIcon = [];
 
         this.shownIcons = [];
+        this.selectedIcon;
 
-        this.selectedIngredient = 0; // Index of selected
+        this.selectedIngredient = 4; // Index of selected
 
-        this.MAX_INGREDIENTS = 6;
+        this.MAX_INGREDIENTS = 5;
     }
 
     addIngredient(ingredient, amount, icon){
         // Only add when ingredient is less than max
-        if (this.ingredientsHeld.length < 6){
+        if (this.ingredientsHeld.length < this.MAX_INGREDIENTS){
             this.ingredientsHeld.push(ingredient);
             this.ingredientsAmount.push(amount);
             this.ingredientsIcon.push(icon);
@@ -47,12 +48,12 @@ export default class Inventory {
 
             // Error: trying to remove an amount larger than inventory
             else{
-                console.log("Error removing ingredient: amount is larger than current stock")
+                console.error("Error removing ingredient: amount is larger than current stock")
             }
         }
         // Error: ingredient doesn't exist in inventory
         else{
-            console.log("Error removing ingredient: ingredient doesn't exist in inventory");
+            console.error("Error removing ingredient: ingredient doesn't exist in inventory");
         }
     
     }
@@ -62,7 +63,12 @@ export default class Inventory {
         this.shownIcons.forEach(icon => {
             icon.destroy();
         });
-        
+
+        // Destroy selected icon
+        if (this.selectedIcon){
+            this.selectedIcon.destroy();
+        }
+
         // Display all the ingredients on the hotbar
         for (let index = 0; index < this.ingredientsHeld.length; index++) {
             // Display the image of the ingredient
@@ -75,7 +81,26 @@ export default class Inventory {
         }
 
         // Display the select bar
+        let selectionOffset = 30 + (this.selectedIngredient * 148)
+        this.selectedIcon = this.scene.add.image(selectionOffset, 458, "select").setOrigin(0, 0);
+
     }
+
+    increaseSelection(){
+        if (this.selectedIngredient < this.MAX_INGREDIENTS){
+            this.selectedIngredient += 1;
+            this.displayInventory;
+        }
+    }
+
+    decreaseSelection(){
+        if (this.selectedIngredient > 0){
+            this.selectedIngredient -= 1;
+            this.displayInventory;
+        }
+    }
+
+    
 
     printIngredients(){
         console.log(this.ingredientsHeld);

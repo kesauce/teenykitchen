@@ -94,7 +94,8 @@ class Kitchen extends Phaser.Scene {
 	CreateUI() {
 		// Adding the hotbar and the select icon to the screen
 		this.add.image(15, sizes.height - 82, "hotbar").setOrigin(0, 0);
-		this.add.image(30, sizes.height - 82, "select").setOrigin(0, 0);
+		
+		this.inventory.displayInventory();
 
 	}
 }
