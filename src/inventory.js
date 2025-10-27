@@ -7,67 +7,53 @@ export default class Inventory {
         this.ingredientsIcon = [];
 
         this.shownIcons = [];
-        this.selectedIcon;
 
         this.selectedIngredient = 0; // Index of selected
 
         this.MAX_INGREDIENTS = 5;
     }
 
-    addIngredient(ingredient, amount, icon){
+    addIngredient(ingredient, amount, icon) {
         // Only add when ingredient is less than max
-        if (this.ingredientsHeld.length < this.MAX_INGREDIENTS){
+        if (this.ingredientsHeld.length < this.MAX_INGREDIENTS) {
             this.ingredientsHeld.push(ingredient);
             this.ingredientsAmount.push(amount);
             this.ingredientsIcon.push(icon);
         }
 
         // Error: inventory is full
-        else {
-            console.error("Error adding ingredient: inventory is full");
-        }
+        else { console.error("Error adding ingredient: inventory is full"); }
 
     }
 
-    removeIngredient(ingredient, amount){
+    removeIngredient(ingredient, amount) {
         // Check if ingredient exist and amount to decrease is less than amount you have
-        if (this.ingredientsHeld.includes(ingredient)){
+        if (this.ingredientsHeld.includes(ingredient)) {
             let ingredientIndex = this.ingredientsHeld.indexOf(ingredient);
 
             // Decrease amount by that much
-            if (amount < this.ingredientsAmount[ingredientIndex]){
+            if (amount < this.ingredientsAmount[ingredientIndex]) {
                 this.ingredientsAmount[ingredientIndex] -= amount
             }
 
             // Completely delete the ingredient
-            else if (amount = this.ingredientsAmount[ingredientIndex]){
+            else if (amount = this.ingredientsAmount[ingredientIndex]) {
                 this.ingredientsHeld.splice(ingredientIndex, 1);
                 this.ingredientsAmount.splice(ingredientIndex, 1);
                 this.ingredientsIcon.splice(ingredientIndex, 1);
             }
 
             // Error: trying to remove an amount larger than inventory
-            else{
-                console.error("Error removing ingredient: amount is larger than current stock")
-            }
+            else { console.error("Error removing ingredient: amount is larger than current stock"); }
         }
         // Error: ingredient doesn't exist in inventory
-        else{
-            console.error("Error removing ingredient: ingredient doesn't exist in inventory");
-        }
-    
+        else { console.error("Error removing ingredient: ingredient doesn't exist in inventory"); }
+
     }
 
-    displayInventory(){
+    displayInventory() {
         // Destroy all icons
-        this.shownIcons.forEach(icon => {
-            icon.destroy();
-        });
-
-        // Destroy selected icon
-        if (this.selectedIcon){
-            this.selectedIcon.destroy();
-        }
+        this.shownIcons.forEach(icon => { icon.destroy(); });
 
         // Display all the ingredients on the hotbar
         for (let index = 0; index < this.ingredientsHeld.length; index++) {
@@ -77,32 +63,30 @@ export default class Inventory {
 
             // Keep track of the showing icons
             this.shownIcons.push(iconImage);
-            
+
         }
 
     }
 
-    increaseSelection(){
-        if (this.selectedIngredient < this.MAX_INGREDIENTS - 1){
+    increaseSelection() {
+        if (this.selectedIngredient < this.MAX_INGREDIENTS - 1) {
             this.selectedIngredient += 1;
             this.displayInventory;
         }
     }
 
-    decreaseSelection(){
-        if (this.selectedIngredient > 0){
+    decreaseSelection() {
+        if (this.selectedIngredient > 0) {
             this.selectedIngredient -= 1;
             this.displayInventory;
         }
     }
 
-    getSelected(){
-        return this.selectedIngredient;
-    }
+    getSelected() { return this.selectedIngredient; }
 
-    
+    setSelected(i) { this.selectedIngredient = i; }
 
-    printIngredients(){
+    printIngredients() {
         console.log(this.ingredientsHeld);
         console.log(this.ingredientsAmount);
         console.log(this.ingredientsIcon);

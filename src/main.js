@@ -217,8 +217,18 @@ class Hotbar extends Phaser.Scene {
 		// Grab the inventory class
 		this.inventory = this.registry.get('inventory');
 
+		// Store the keys for changing inventory
 		this.keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
 		this.keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
+
+		// Store the zones for each inventory slot
+		this.hotbarZones = [];
+		for (let index = 0; index < 5; index++) {
+			let xZoneAxis =  30 + (index * 146);
+			let zone = this.add.zone(xZoneAxis, 458, 118, 70).setOrigin(0).setInteractive({ useHandCursor: true });
+			this.hotbarZones.push(zone);
+			
+		}
 
 		this.inventory.displayInventory();
 		this.updateHotbar();
@@ -236,6 +246,15 @@ class Hotbar extends Phaser.Scene {
 			this.inventory.increaseSelection();
 			this.updateHotbar();
 		}
+
+		// If any of the zones were clicked
+		this.hotbarZones.forEach(zone => {
+			zone.on('pointerdown', () => {
+				let zoneIndex = this.hotbarZones.indexOf(zone);
+				this.inventory.setSelected(zoneIndex);
+				this.updateHotbar();
+			});
+		});
 
 		
 	}
