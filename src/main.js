@@ -58,8 +58,8 @@ class Kitchen extends Phaser.Scene {
 
 	create() {
 
-		this.CreateKitchen();
-		this.CreateUI();
+		this.createKitchen();
+		this.createUI();
 
 		// Ensuring objects can be globally accessed
 		this.registry.set('fridge', this.fridge);
@@ -75,7 +75,7 @@ class Kitchen extends Phaser.Scene {
 	// ---------- ***** ---------- //
 
 
-	CreateKitchen() {
+	createKitchen() {
 		// Add the kitchen background
 		let bg = this.add.image(0, 0, "bg").setOrigin(0, 0);
 
@@ -91,11 +91,13 @@ class Kitchen extends Phaser.Scene {
 		this.inventory = new Inventory(this);
 	}
 
-	CreateUI() {
+	createUI() {
 		// Adding the hotbar and the select icon to the screen
 		this.add.image(15, sizes.height - 82, "hotbar").setOrigin(0, 0);
 		
 		this.inventory.displayInventory();
+		this.scene.launch('Hotbar');
+		this.scene.bringToTop('Hotbar');
 
 	}
 }
@@ -133,8 +135,8 @@ class FridgeMenu extends Phaser.Scene {
 		this.fridge = this.registry.get('fridge');
 		this.inventory = this.registry.get('inventory');
 
-		this.InitialiseFridgeMenu();
-		this.DisplayIngredients();
+		this.initialiseFridgeMenu();
+		this.displayIngredients();
 
 		//test to add ingredient
 		this.inventory.addIngredient('Milk', 1, 'milk_bottle');
@@ -144,9 +146,9 @@ class FridgeMenu extends Phaser.Scene {
 
 	}
 
-	InitialiseFridgeMenu(){
+	initialiseFridgeMenu(){
 		// Add background and cancel button
-		this.add.rectangle(30, 30, (sizes.width) - 60, (sizes.height) - 120, 0xfadde1).setOrigin(0);
+		this.add.rectangle(30, 30, (sizes.width) - 60, (sizes.height) - 120, 0xfadde1).setOrigin(0).setInteractive();
 		this.add.image(sizes.width - 54, 12, "cancel").setOrigin(0);
 
 		// Makes the cancel button clickable
@@ -165,7 +167,7 @@ class FridgeMenu extends Phaser.Scene {
 		});
 	}
 
-	DisplayIngredients() {
+	displayIngredients() {
 		// Create a scrollable container and populate it with ingredients
 		let yAxis = 50;
 		let xAxis = 10;
@@ -203,6 +205,32 @@ class FridgeMenu extends Phaser.Scene {
 
 }
 
+class Hotbar extends Phaser.Scene {
+	constructor(){
+		super({ key: 'Hotbar' });
+	}
+
+	create(){
+		// Grab the inventory class
+		this.inventory = this.registry.get('inventory');
+
+		this.updateHotbar();
+	}
+
+	updateHotbar(){
+		// Display the select bar
+        let selectionOffset = 30 + (this.inventory.getSelected() * 148)
+        let selectedIcon = this.add.image(selectionOffset, 458, "select").setOrigin(0, 0);
+        this.tweens.add({
+            targets: selectedIcon,
+            alpha: 0,              // Fades out
+            duration: 500,
+            yoyo: true,            // Go back to alpha = 1
+            repeat: -1             // Repeat forever
+        });
+	}
+}
+
 // Setting up the game
 const config = {
 	type: Phaser.WEBGL,
@@ -211,7 +239,8 @@ const config = {
 	canvas: gameCanvas,
 	pixelArt: true,   // keeps crisp edges
 
-	scene: [Kitchen, FridgeMenu]
+	scene: [Kitchen, FridgeMenu, Hotbar]
+
 }
 
 // Running the game

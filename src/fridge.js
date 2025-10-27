@@ -32,8 +32,8 @@ export default class Fridge {
 		this.scene.input.setDefaultCursor('default');
 
 		// Launch scene
-		this.scene.scene.pause("Kitchen");
 		this.scene.scene.launch("FridgeMenu");
+		this.scene.scene.bringToTop("FridgeMenu");
 	}
 
 	close() {
@@ -41,8 +41,10 @@ export default class Fridge {
 		this.zone.setInteractive({ useHandCursor: true });
 		this.scene.input.setDefaultCursor('default');
 
-		// Resume scene
+		// Delete the fridge scene
 		this.scene.scene.stop("FridgeMenu");
-		this.scene.scene.resume("Kitchen");
+
+		// Close the fridge
+		this.openImage.setVisible(false);
 	}
 }
