@@ -11,10 +11,12 @@ export default class Inventory {
         this.MAX_INGREDIENTS = 5;
     }
 
-    addIngredient(ingredient, n, i) {
+    addIngredient(ingredient, i) {
+        // Check if ingredient already exists, if so then increment the amount
+        if (ingredient in this.ingredients){ this.ingredients[ingredient].amount += 1; }
         // Only add when ingredient is less than max
-        if (Object.keys(this.ingredients).length < this.MAX_INGREDIENTS) {
-            this.ingredients[ingredient] = { amount: n, icon: i};
+        else if (Object.keys(this.ingredients).length < this.MAX_INGREDIENTS) {
+            this.ingredients[ingredient] = { amount: 1, icon: i};
         }
 
         // Error: inventory is full

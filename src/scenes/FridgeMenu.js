@@ -41,7 +41,7 @@ export default class FridgeMenu extends Phaser.Scene {
         this.displayIngredients();
 
         //test to add ingredient
-        this.inventory.addIngredient('Milk', 1, 'milk_bottle');
+        this.inventory.addIngredient('Milk', 'milk_bottle');
         this.inventory.displayInventory();
 
 
@@ -99,10 +99,6 @@ export default class FridgeMenu extends Phaser.Scene {
             ingredientsContainer.add(text);
             ingredientsContainer.add(icon);
 
-            // let ingredientZone = this.add.zone(xAxis, yAxis - 15, visibleWidth, ingredientGap).setOrigin(0).setInteractive({ useHandCursor: true }).setDepth(0);
-            // ingredientsContainer.add(ingredientZone);
-            // ingredientArray.push(ingredientZone);
-
             yAxis += ingredientGap;
         });
 
@@ -141,8 +137,6 @@ export default class FridgeMenu extends Phaser.Scene {
 
             // Change the hovered ingredient to add a 
             if (index >= 0 && index < this.ingredients.length) {
-                console.log(this.ingredients[index][0]);
-                
                 if (ingredientSelectImage) { ingredientSelectImage.setVisible(false); }
 
                 let yPos = index * 60 + ingredientsContainer.y + 25; 
@@ -152,11 +146,29 @@ export default class FridgeMenu extends Phaser.Scene {
             }
         });
 
+        // If mouse goes out of scroll zone then reset the image and selection index
         scrollZone.on('pointerout', () => {
             ingredientSelectImage.setVisible(false);
             previousIndex = null;
         });
 
+        scrollZone.on('pointerdown', (pointer) => {
+            // Turn the mouse pointer coordinate relative to the container
+            const localY = pointer.y - ingredientsContainer.y - maskY;
+
+            // Figure out which ingredient index that corresponds to
+            const index = Math.ceil(localY / ingredientGap);
+
+            // Add the clicked ingredient to the inventory
+            if (index >= 0 && index < this.ingredients.length) {     
+                console.log(this.ingredients[index][0]);          
+                // Add the ingredient to the inventory
+                this.inventory.addIngredient(this.ingredients[index][0], this.ingredients[index][1]);
+                this.inventory.displayInventory();
+            }
+        });
     }
+
+
 
 }
