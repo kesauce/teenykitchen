@@ -2,9 +2,7 @@ export default class Inventory {
     constructor(scene) {
         this.scene = scene;
 
-        this.ingredientsHeld = [];
-        this.ingredientsAmount = [];
-        this.ingredientsIcon = [];
+        this.ingredients = {};
 
         this.shownIcons = [];
 
@@ -13,12 +11,10 @@ export default class Inventory {
         this.MAX_INGREDIENTS = 5;
     }
 
-    addIngredient(ingredient, amount, icon) {
+    addIngredient(ingredient, n, i) {
         // Only add when ingredient is less than max
-        if (this.ingredientsHeld.length < this.MAX_INGREDIENTS) {
-            this.ingredientsHeld.push(ingredient);
-            this.ingredientsAmount.push(amount);
-            this.ingredientsIcon.push(icon);
+        if (Object.keys(this.ingredients).length < this.MAX_INGREDIENTS) {
+            this.ingredients[ingredient] = { amount: n, icon: i};
         }
 
         // Error: inventory is full
@@ -26,21 +22,19 @@ export default class Inventory {
 
     }
 
-    removeIngredient(ingredient, amount) {
+    removeIngredient(ingredient, n) {
         // Check if ingredient exist and amount to decrease is less than amount you have
-        if (this.ingredientsHeld.includes(ingredient)) {
+        if (ingredient in this.ingredients) {
             let ingredientIndex = this.ingredientsHeld.indexOf(ingredient);
 
             // Decrease amount by that much
-            if (amount < this.ingredientsAmount[ingredientIndex]) {
-                this.ingredientsAmount[ingredientIndex] -= amount
+            if (n < this.ingredients[ingredients].amount) {
+                this.ingredients.ingredient.amount -= 1;
             }
 
             // Completely delete the ingredient
-            else if (amount = this.ingredientsAmount[ingredientIndex]) {
-                this.ingredientsHeld.splice(ingredientIndex, 1);
-                this.ingredientsAmount.splice(ingredientIndex, 1);
-                this.ingredientsIcon.splice(ingredientIndex, 1);
+            else if (n === this.ingredients[ingredients].amount) {
+                delete this.ingredients.ingredient;
             }
 
             // Error: trying to remove an amount larger than inventory
@@ -55,30 +49,29 @@ export default class Inventory {
         // Destroy all icons
         this.shownIcons.forEach(icon => { icon.destroy(); });
 
-        // Display all the ingredients on the hotbar
-        for (let index = 0; index < this.ingredientsHeld.length; index++) {
-            // Display the image of the ingredient
-            let iconName = this.ingredientsIcon[index];
+        
+        Object.keys(this.ingredients).forEach(key => {
+             // Display the image of the ingredient
+            let iconName = this.ingredients[key].icon;
             let iconImage = this.scene.add.image(57, 460, iconName).setOrigin(0, 0).setScale(2);
 
             // Keep track of the showing icons
             this.shownIcons.push(iconImage);
-
-        }
+        });
 
     }
 
     increaseSelection() {
         if (this.selectedIngredient < this.MAX_INGREDIENTS - 1) {
             this.selectedIngredient += 1;
-            this.displayInventory;
+            this.displayInventory();
         }
     }
 
     decreaseSelection() {
         if (this.selectedIngredient > 0) {
             this.selectedIngredient -= 1;
-            this.displayInventory;
+            this.displayInventory();
         }
     }
 
