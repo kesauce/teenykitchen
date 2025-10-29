@@ -24,10 +24,19 @@ export default class Hotbar extends Phaser.Scene {
         this.hotbarZones = [];
         for (let index = 0; index < 5; index++) {
             let xZoneAxis =  30 + (index * 146);
-            let zone = this.add.zone(xZoneAxis, 458, 118, 70).setOrigin(0).setInteractive({ useHandCursor: true });
+            let zone = this.add.zone(xZoneAxis, 458, 118, 70).setOrigin(0, 0).setInteractive({ useHandCursor: true }).setDepth(10);
             this.hotbarZones.push(zone);
             
         }
+
+        // If any of the zones were clicked
+        this.hotbarZones.forEach(zone => {
+            zone.on('pointerdown', () => {
+                let zoneIndex = this.hotbarZones.indexOf(zone);
+                this.inventory.setSelected(zoneIndex);
+                this.updateHotbar();
+            });
+        });
 
         this.inventory.displayInventory();
         this.updateHotbar();
@@ -45,16 +54,6 @@ export default class Hotbar extends Phaser.Scene {
             this.inventory.increaseSelection();
             this.updateHotbar();
         }
-
-        // If any of the zones were clicked
-        this.hotbarZones.forEach(zone => {
-            zone.on('pointerdown', () => {
-                let zoneIndex = this.hotbarZones.indexOf(zone);
-                this.inventory.setSelected(zoneIndex);
-                this.updateHotbar();
-            });
-        });
-
         
     }
 

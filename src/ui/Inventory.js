@@ -25,8 +25,7 @@ export default class Inventory {
     removeIngredient(ingredient, n) {
         // Check if ingredient exist and amount to decrease is less than amount you have
         if (ingredient in this.ingredients) {
-            let ingredientIndex = this.ingredientsHeld.indexOf(ingredient);
-
+            
             // Decrease amount by that much
             if (n < this.ingredients[ingredients].amount) {
                 this.ingredients.ingredient.amount -= 1;
@@ -79,9 +78,4 @@ export default class Inventory {
 
     setSelected(i) { this.selectedIngredient = i; }
 
-    printIngredients() {
-        console.log(this.ingredientsHeld);
-        console.log(this.ingredientsAmount);
-        console.log(this.ingredientsIcon);
-    }
 }
