@@ -2,7 +2,16 @@ export default class Inventory {
     constructor(scene) {
         this.scene = scene;
 
-        this.ingredients = {};
+        //this.ingredients = {};
+
+        this.ingredients = [
+            [],
+            [],
+            [],
+            [],
+            []
+            // [name, icon, amount]
+        ]
 
         this.shownIcons = [];
 
@@ -11,12 +20,19 @@ export default class Inventory {
         this.MAX_INGREDIENTS = 5;
     }
 
-    addIngredient(ingredient, i) {
+    addIngredient(ingredient, icon) {
+        let index = this.containsIngredient(ingredient);
+
         // Check if ingredient already exists, if so then increment the amount
-        if (ingredient in this.ingredients){ this.ingredients[ingredient].amount += 1; }
+        if (index != -1){ 
+            this.ingredients[index][2] += 1;
+        }
+
         // Only add when ingredient is less than max
-        else if (Object.keys(this.ingredients).length < this.MAX_INGREDIENTS) {
-            this.ingredients[ingredient] = { amount: 1, icon: i};
+        else if (this.isEmptyAt(this.selectedIngredient)) {
+            let ingredientArray = [ingredient, icon, 1];
+            this.ingredients[this.selectedIngredient] = ingredientArray;
+            this.displayInventory();
         }
 
         // Error: inventory is full
@@ -50,14 +66,16 @@ export default class Inventory {
         // Destroy all icons
         this.shownIcons.forEach(icon => { icon.destroy(); });
 
-        
-        Object.keys(this.ingredients).forEach(key => {
+        let xAxis = 57;
+        this.ingredients.forEach(ingredientArray => {
              // Display the image of the ingredient
-            let iconName = this.ingredients[key].icon;
-            let iconImage = this.scene.add.image(57, 460, iconName).setOrigin(0, 0).setScale(2);
+            let iconName = ingredientArray[1];
+            let iconImage = this.scene.add.image(xAxis, 460, iconName).setOrigin(0, 0).setScale(2);
 
             // Keep track of the showing icons
             this.shownIcons.push(iconImage);
+
+            xAxis += 147;
         });
 
     }
@@ -80,4 +98,19 @@ export default class Inventory {
 
     setSelected(i) { this.selectedIngredient = i; }
 
+    containsIngredient(ingredient){
+        this.ingredients.forEach((ingredientArray, i) => {
+            if (ingredientArray[0] == ingredient) { return i; }
+        });
+
+        return -1;
+    }
+
+    isEmptyAt(index){
+        this.ingredients.forEach((ingredientArray, i) => {
+            if (i == index && ingredientArray != []) { return false; }
+        });
+
+        return true;
+    }
 }
