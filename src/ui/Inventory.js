@@ -29,26 +29,11 @@ export default class Inventory {
 
     }
 
-    removeIngredient(ingredient, n) {
-        // Check if ingredient exist and amount to decrease is less than amount you have
-        if (ingredient in this.ingredients) {
-            
-            // Decrease amount by that much
-            if (n < this.ingredients[ingredients].amount) {
-                this.ingredients.ingredient.amount -= 1;
-            }
-
-            // Completely delete the ingredient
-            else if (n === this.ingredients[ingredients].amount) {
-                delete this.ingredients.ingredient;
-            }
-
-            // Error: trying to remove an amount larger than inventory
-            else { console.error("Error removing ingredient: amount is larger than current stock"); }
-        }
-        // Error: ingredient doesn't exist in inventory
-        else { console.error("Error removing ingredient: ingredient doesn't exist in inventory"); }
-
+    removeIngredient(index) {
+        // Destroy popup if ever
+        if (this.ingredients[index][2] != null ) { this.ingredients[index][2].destroy(); }
+        this.ingredients[index] = [];
+        this.displayInventory();
     }
 
     displayInventory() {

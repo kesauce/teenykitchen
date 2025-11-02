@@ -10,6 +10,9 @@ export default class Hotbar extends Phaser.Scene {
     }
 
     create(){
+        // Disable the browser's right-click context menu
+        this.input.mouse.disableContextMenu();
+        
         // Store the selected icon for destroying
         this.selectedIcon;
 
@@ -31,10 +34,17 @@ export default class Hotbar extends Phaser.Scene {
 
         this.hotbarZones.forEach(zone => {
             let zoneIndex = this.hotbarZones.indexOf(zone);
-            
+
             // If any of the zones were clicked
-            zone.on('pointerdown', () => {
-                this.inventory.setSelected(zoneIndex);
+            zone.on('pointerdown', (pointer) => {
+                // If it was a right click then remove object
+                if (pointer.rightButtonDown()){ 
+                    this.inventory.removeIngredient(zoneIndex); 
+                }
+                else{
+                    this.inventory.setSelected(zoneIndex);
+                }
+                
                 this.updateHotbar();
             });
 
