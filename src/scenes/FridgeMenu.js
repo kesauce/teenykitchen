@@ -132,6 +132,9 @@ export default class FridgeMenu extends Phaser.Scene {
             // Don't redraw if you're still on the same index
             if (previousIndex == index){ return; }
 
+            // Don't select an ingredient that's out of bounds
+            if (pointer.y < maskY || pointer.y > maskY + visibleHeight - 15) { return; }
+
             // Change the hovered ingredient to add a select image
             if (index >= 0 && index < this.ingredients.length) {
                 let yPos = index * ingredientGap + ingredientsContainer.y + 25; 
@@ -151,16 +154,12 @@ export default class FridgeMenu extends Phaser.Scene {
         });
 
         scrollZone.on('pointerdown', (pointer) => {
-            // Turn the mouse pointer coordinate relative to the container
+            // Turn the mouse pointer coordinate relative to the container and figure out which ingredient index that corresponds to
             const localY = pointer.y - ingredientsContainer.y - maskY;
-
-            // Figure out which ingredient index that corresponds to
             const index = Math.ceil(localY / ingredientGap);
 
             // Add the clicked ingredient to the inventory
-            if (index >= 0 && index < this.ingredients.length) {     
-                console.log(this.ingredients[index][0]);          
-                // Add the ingredient to the inventory
+            if (index >= 0 && index < this.ingredients.length) {           
                 this.inventory.addIngredient(this.ingredients[index][0], this.ingredients[index][1]);
             }
         });
