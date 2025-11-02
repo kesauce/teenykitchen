@@ -40,10 +40,6 @@ export default class FridgeMenu extends Phaser.Scene {
         this.initialiseFridgeMenu();
         this.displayIngredients();
 
-        //test to add ingredient
-        this.inventory.addIngredient('Milk', 'milk_bottle');
-
-
     }
 
 
@@ -106,9 +102,13 @@ export default class FridgeMenu extends Phaser.Scene {
         const mask = maskShape.createGeometryMask();
         ingredientsContainer.setMask(mask);
 
+        let ingredientSelectImage = this.add.image(containerX, 0, "ingredient_select").setOrigin(0, 0).setVisible(false);
+
         // Create scroll zone overlay that moves the ingredient container up and down
         const scrollZone = this.add.zone(maskX, maskY, visibleWidth, visibleHeight).setInteractive().setOrigin(0, 0).setDepth(0);
         scrollZone.on('wheel', (pointer, dx, dy, dz) => {
+            ingredientSelectImage.setVisible(false);
+            
             const scrollSpeed = 0.56;
             ingredientsContainer.y -= dy * scrollSpeed;
 
@@ -122,7 +122,6 @@ export default class FridgeMenu extends Phaser.Scene {
         });
 
         let previousIndex;
-        let ingredientSelectImage = this.add.image(containerX, 0, "ingredient_select").setOrigin(0, 0).setVisible(false);
 
         // Check if any of the specific ingredient zones have been hovered on
         scrollZone.on('pointermove', (pointer) => {
@@ -138,9 +137,6 @@ export default class FridgeMenu extends Phaser.Scene {
                 let yPos = index * ingredientGap + ingredientsContainer.y + 25; 
 
                 if (ingredientSelectImage) { ingredientSelectImage.setVisible(false); }
-
-                // // Don't select an ingredient that's halfway out of bounds
-                // if (yPos + 60 > maskY + visibleHeight){ return; }
 
                 ingredientSelectImage.y = yPos;
                 ingredientSelectImage.setVisible(true);

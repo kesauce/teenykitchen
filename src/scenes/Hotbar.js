@@ -29,13 +29,24 @@ export default class Hotbar extends Phaser.Scene {
             
         }
 
-        // If any of the zones were clicked
         this.hotbarZones.forEach(zone => {
+            let zoneIndex = this.hotbarZones.indexOf(zone);
+            
+            // If any of the zones were clicked
             zone.on('pointerdown', () => {
-                let zoneIndex = this.hotbarZones.indexOf(zone);
                 this.inventory.setSelected(zoneIndex);
                 this.updateHotbar();
             });
+
+            // If any of the zones were hovered, then show a popup
+            zone.on('pointerover', () => {
+                if (!this.inventory.isEmptyAt(zoneIndex)){ this.inventory.displayPopup(zoneIndex); }
+            });
+
+            // Destroy the popup when hovered out
+            zone.on('pointerout', () => {
+                this.inventory.destroyPopup(zoneIndex); 
+            })
         });
 
         this.inventory.displayInventory();

@@ -10,7 +10,7 @@ export default class Inventory {
             [],
             [],
             []
-            // [name, icon, amount]
+            // [name, icon, popup text (optional)]
         ]
 
         this.shownIcons = [];
@@ -21,22 +21,11 @@ export default class Inventory {
     }
 
     addIngredient(ingredient, icon) {
-        let index = this.containsIngredient(ingredient);
-
-        // Check if ingredient already exists, if so then increment the amount
-        if (index != -1){ 
-            this.ingredients[index][2] += 1;
-        }
-
-        // Only add when ingredient is less than max
-        else if (this.isEmptyAt(this.selectedIngredient)) {
-            let ingredientArray = [ingredient, icon, 1];
-            this.ingredients[this.selectedIngredient] = ingredientArray;
-            this.displayInventory();
-        }
-
-        // Error: inventory is full
-        else { console.error("Error adding ingredient: inventory is full"); }
+        // If replacing another ingredient, ensure to destroy the popup if ever
+        if (this.ingredients[this.selectedIngredient][2] != null ) { this.ingredients[this.selectedIngredient][2].destroy(); }
+        let ingredientArray = [ingredient, icon];
+        this.ingredients[this.selectedIngredient] = ingredientArray;
+        this.displayInventory();
 
     }
 
@@ -80,6 +69,23 @@ export default class Inventory {
 
     }
 
+    displayPopup(i){
+        // Get the name of the ingredient of the given index and create its text
+        let name = this.ingredients[i][0];
+
+        let xAxis = 5;
+        let yAxis = 5;
+        this.ingredients[i].push( this.scene.add.text(xAxis, yAxis, name, { fontSize: '10px', color: '#000', fontFamily: 'daydream' }));
+    }
+
+    destroyPopup(i){
+        if(this.ingredients[i][2] != null){
+            this.ingredients[i][2].destroy();
+            this.ingredients[i].pop();
+        }
+        
+    }
+
     increaseSelection() {
         if (this.selectedIngredient < this.MAX_INGREDIENTS - 1) {
             this.selectedIngredient += 1;
@@ -107,10 +113,7 @@ export default class Inventory {
     }
 
     isEmptyAt(index){
-        this.ingredients.forEach((ingredientArray, i) => {
-            if (i == index && ingredientArray != []) { return false; }
-        });
-
-        return true;
+        if (this.ingredients[index].length != 0) { return false; }
+        else { return true; }
     }
 }
