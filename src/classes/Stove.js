@@ -27,7 +27,25 @@ export default class Stove {
 	}
 
 	open() {
+		// Disable clicks and hover
+		this.zone.disableInteractive();
+		this.scene.input.setDefaultCursor('default');
 
+		// Launch scene
+		this.scene.scene.launch("StoveMenu");
+		this.scene.scene.bringToTop("StoveMenu");
+	}
+
+	close() {
+		// Re-enable clicks and hover
+		this.zone.setInteractive({ useHandCursor: true });
+		this.scene.input.setDefaultCursor('default');
+
+		// Delete the scene
+		this.scene.scene.stop("StoveMenu");
+
+		// Close the 
+		this.openImage.setVisible(false);
 	}
 
 }

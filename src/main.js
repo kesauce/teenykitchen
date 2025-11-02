@@ -3,6 +3,7 @@ import Phaser from 'phaser';
 import Kitchen from './scenes/Kitchen.js'
 import FridgeMenu from './scenes/FridgeMenu.js';
 import Hotbar from './scenes/Hotbar.js'
+import StoveMenu from './scenes/StoveMenu.js'
 
 // Creating constant variables
 const sizes = {
@@ -18,7 +19,7 @@ const config = {
 	canvas: gameCanvas,
 	pixelArt: true,   // keeps crisp edges
 
-	scene: [Kitchen, FridgeMenu, Hotbar]
+	scene: [Kitchen, FridgeMenu, Hotbar, StoveMenu]
 
 }
 
@@ -28,3 +29,19 @@ game.registry.set('sizes', {
 	width: 768,
 	height: 540
 });
+game.registry.set('ingredients', [
+	['Milk', 'milk_bottle'],
+	['Egg', 'egg'],
+	['Apple', 'red_apple'],
+	['Banana', 'banana'],
+	['Butter', 'butter'],
+	['Flour', 'flour'],
+	['Sugar', 'sugar'],
+	['Coffee', 'coffee'],
+	['Cocoa Powder', 'cocoa'],
+	['Yogurt', 'yogurt'],
+	['Potato', 'potato'],
+	['Fish', 'fish'],
+	['Strawberry', 'strawberry'],
+	['Grape', 'grape']
+]);
