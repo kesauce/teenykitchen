@@ -7,6 +7,10 @@ export default class StoveMenu extends Phaser.Scene {
         this.stove;
         this.inventory;
         this.recipes;
+        this.selectedSlot = 0;
+
+        this.ingredientZones = [];
+        this.ingredients = [];
     }
 
     create(){
@@ -28,7 +32,7 @@ export default class StoveMenu extends Phaser.Scene {
         const menuHeight = sizes.height - 120;
 
         // Add background and cancel button
-        this.add.rectangle(menuX, menuY, menuWidth, menuHeight, 0xfadde1).setOrigin(0).setInteractive();
+        this.add.rectangle(menuX, menuY, menuWidth, menuHeight, 0xfadde1).setOrigin(0, 0).setInteractive();
         this.add.image(menuWidth + 10, menuY - 15, "cancel").setOrigin(0).setDepth;
 
         // Makes the cancel button clickable
@@ -45,5 +49,32 @@ export default class StoveMenu extends Phaser.Scene {
             fontSize: '25px',
             color: '#000000'
         });
+
+        
+
+        // Add the 3 ingredient zone locations
+        let zoneX = menuX + 50;
+        let zoneY = menuY + 70;
+        let zoneWidth = 118;
+        let zoneHeight = 70;
+        let zoneGap = 120;
+
+        // Add the frying pan and select image
+        this.add.image(menuWidth/2 - 30, menuHeight/2, "pan").setOrigin(0, 0).setScale(4);
+        this.add.image(zoneX, zoneY, 'select').setOrigin(0, 0);
+
+        for (let i = 0; i < 3; i++) {
+            let zone = this.add.zone(zoneX, zoneY, zoneWidth, zoneHeight).setOrigin(0, 0);
+            this.add.text(zoneX + 25, zoneY + 20, "???",{
+                fontFamily: 'daydream',
+                fontSize: '25px',
+                color: '#999999'
+            });
+
+            this.ingredientZones.push(zone);
+            
+            zoneX += zoneWidth + zoneGap;
+        }
+
     }
 }
