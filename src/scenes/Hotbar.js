@@ -12,7 +12,7 @@ export default class Hotbar extends Phaser.Scene {
     create(){
         // Disable the browser's right-click context menu
         this.input.mouse.disableContextMenu();
-        
+
         // Store the selected icon for destroying
         this.selectedIcon;
 
@@ -22,6 +22,7 @@ export default class Hotbar extends Phaser.Scene {
         // Store the keys for changing inventory
         this.keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
         this.keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
+        this.keyE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
 
         // Store the zones for each inventory slot
         this.hotbarZones = [];
@@ -65,7 +66,7 @@ export default class Hotbar extends Phaser.Scene {
     }
 
     update(){
-        // Check if W or D is clicked (A go left, D go right)
+        // Check if A or D is clicked (A go left, D go right)
         if (Phaser.Input.Keyboard.JustDown(this.keyA)) {
             this.inventory.decreaseSelection();
             this.updateHotbar();
@@ -76,6 +77,11 @@ export default class Hotbar extends Phaser.Scene {
             this.updateHotbar();
         }
         
+        // If E is clicked, remove ingredient from hotbar
+        if (Phaser.Input.Keyboard.JustDown(this.keyE)){
+            this.inventory.removeIngredient(this.inventory.getSelected());
+            this.updateHotbar();
+        }
     }
 
     updateHotbar(){
