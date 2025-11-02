@@ -24,9 +24,10 @@ export default class FridgeMenu extends Phaser.Scene {
             ['Strawberry', 'strawberry'],
             ['Grape', 'grape']
         ];
-        
         this.fridge;
         this.inventory;
+        this.ingredientsContainer;
+        this.ingredientSelectImage;
     }
 
     preload() {
@@ -39,6 +40,11 @@ export default class FridgeMenu extends Phaser.Scene {
 
         this.initialiseFridgeMenu();
         this.displayIngredients();
+
+        // Store the keys for using keyboard
+        // this.keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
+        // this.keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
+        // this.keyQ = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q);
 
     }
 
@@ -85,14 +91,14 @@ export default class FridgeMenu extends Phaser.Scene {
         // Create a scrollable container and populate it with ingredients
         let yAxis = 50;
         let xAxis = 10;
-        let ingredientsContainer = this.add.container(containerX, containerY).setDepth(0);
+        this.ingredientsContainer = this.add.container(containerX, containerY).setDepth(0);
 
         // Display the name and icon of each ingredient and create a zone of it
         this.ingredients.forEach((ingredientArray) => {
             let icon = this.add.image(xAxis, yAxis - 15, ingredientArray[1]).setOrigin(0, 0).setScale(1.5);
             let text = this.add.text(xAxis + 60, yAxis, ingredientArray[0], { fontSize: '16px', color: '#000', fontFamily: 'daydream' });
-            ingredientsContainer.add(text);
-            ingredientsContainer.add(icon);
+            this.ingredientsContainer.add(text);
+            this.ingredientsContainer.add(icon);
 
             yAxis += ingredientGap;
         });
@@ -100,24 +106,24 @@ export default class FridgeMenu extends Phaser.Scene {
         // Create a mask to prevent out of bound ingredients
         const maskShape = this.make.graphics(); maskShape.fillRect(maskX, maskY, visibleWidth, visibleHeight);
         const mask = maskShape.createGeometryMask();
-        ingredientsContainer.setMask(mask);
+        this.ingredientsContainer.setMask(mask);
 
-        let ingredientSelectImage = this.add.image(containerX, 0, "ingredient_select").setOrigin(0, 0).setVisible(false);
+        this.ingredientSelectImage = this.add.image(containerX, 0, "ingredient_select").setOrigin(0, 0).setVisible(false);
 
         // Create scroll zone overlay that moves the ingredient container up and down
         const scrollZone = this.add.zone(maskX, maskY, visibleWidth, visibleHeight).setInteractive().setOrigin(0, 0).setDepth(0);
         scrollZone.on('wheel', (pointer, dx, dy, dz) => {
-            ingredientSelectImage.setVisible(false);
+            this.ingredientSelectImage.setVisible(false);
             
             const scrollSpeed = 0.56;
-            ingredientsContainer.y -= dy * scrollSpeed;
+            this.ingredientsContainer.y -= dy * scrollSpeed;
 
             // Create bounds to prevent overscrolling
             let maxY = 50;
-            let minY = sizes.height - 150 - ingredientsContainer.getBounds().height;
+            let minY = sizes.height - 150 - this.ingredientsContainer.getBounds().height;
 
-            if (ingredientsContainer.y > maxY) ingredientsContainer.y = maxY;
-            if (ingredientsContainer.y < minY) ingredientsContainer.y = minY;
+            if (this.ingredientsContainer.y > maxY) this.ingredientsContainer.y = maxY;
+            if (this.ingredientsContainer.y < minY) this.ingredientsContainer.y = minY;
 
         });
 
@@ -126,7 +132,7 @@ export default class FridgeMenu extends Phaser.Scene {
         // Check if any of the specific ingredient zones have been hovered on
         scrollZone.on('pointermove', (pointer) => {
             // Turn the mouse pointer coordinate relative to the container and find out which ingredient index that corresponds to
-            const localY = pointer.y - ingredientsContainer.y - maskY;
+            const localY = pointer.y - this.ingredientsContainer.y - maskY;
             const index = Math.ceil(localY / ingredientGap);
 
             // Don't redraw if you're still on the same index
@@ -137,25 +143,25 @@ export default class FridgeMenu extends Phaser.Scene {
 
             // Change the hovered ingredient to add a select image
             if (index >= 0 && index < this.ingredients.length) {
-                let yPos = index * ingredientGap + ingredientsContainer.y + 25; 
+                let yPos = index * ingredientGap + this.ingredientsContainer.y + 25; 
 
-                if (ingredientSelectImage) { ingredientSelectImage.setVisible(false); }
+                if (this.ingredientSelectImage) { this.ingredientSelectImage.setVisible(false); }
 
-                ingredientSelectImage.y = yPos;
-                ingredientSelectImage.setVisible(true);
+                this.ingredientSelectImage.y = yPos;
+                this.ingredientSelectImage.setVisible(true);
                 previousIndex = index;
             }
         });
 
         // If mouse goes out of scroll zone then reset the image and selection index
         scrollZone.on('pointerout', () => {
-            ingredientSelectImage.setVisible(false);
+            this.ingredientSelectImage.setVisible(false);
             previousIndex = null;
         });
 
         scrollZone.on('pointerdown', (pointer) => {
             // Turn the mouse pointer coordinate relative to the container and figure out which ingredient index that corresponds to
-            const localY = pointer.y - ingredientsContainer.y - maskY;
+            const localY = pointer.y - this.ingredientsContainer.y - maskY;
             const index = Math.ceil(localY / ingredientGap);
 
             // Add the clicked ingredient to the inventory
