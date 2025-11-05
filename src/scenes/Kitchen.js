@@ -56,6 +56,7 @@ export default class Kitchen extends Phaser.Scene {
         this.load.image('fried_egg', '/assets/food/fried_egg.png');
         this.load.image('omelette', '/assets/food/omelette.png');
         this.load.image('bacon_and_egg', '/assets/food/bacon_and_egg.png');
+        this.load.image('rocks', '/assets/food/rocks.png')
 
     }
 

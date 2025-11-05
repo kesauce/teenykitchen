@@ -155,7 +155,12 @@ export default class StoveMenu extends Phaser.Scene {
 
         if (this.recipes.findRecipe(ingredientNames, "Stove") != null){
             recipe = this.recipes.findRecipe(ingredientNames, "Stove");
-            console.log("recipe found");
+            this.inventory.addIngredient(recipe.meal, recipe.mealIcon);
+        }
+
+        // Add rocks to the inventory
+        else {
+            this.inventory.addIngredient("Rocks", "rocks");
         }
     }
 }
