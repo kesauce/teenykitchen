@@ -89,6 +89,8 @@ export default class Inventory {
 
     setSelected(i) { this.selectedIngredient = i; }
 
+    getInventory(){ return this.ingredients; }
+
     containsIngredient(ingredient){
         this.ingredients.forEach((ingredientArray, i) => {
             if (ingredientArray[0] == ingredient) { return i; }

@@ -46,6 +46,8 @@ export default class Hotbar extends Phaser.Scene {
                     this.inventory.setSelected(zoneIndex);
                 }
                 
+                // Emit a global event
+                this.game.events.emit('hotbarClicked', zoneIndex);
                 this.updateHotbar();
             });
 
