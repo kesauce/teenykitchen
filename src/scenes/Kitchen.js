@@ -43,6 +43,8 @@ export default class Kitchen extends Phaser.Scene {
         this.load.image("strawberry", "/assets/ingredients/strawberry.png");
         this.load.image("grape", "/assets/ingredients/red_grape.png");
         this.load.image('bacon', '/assets/ingredients/bacon.png');
+        this.load.image('cheese', '/assets/ingredients/cheese.png');
+        this.load.image('water', '/assets/ingredients/water.png');
 
         // Preload UI
         this.load.image("cancel", "/assets/ui/cancel.png");

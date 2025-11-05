@@ -29,7 +29,55 @@ export default class Recipes {
                 meal: 'Bacon and Egg',
                 mealIcon: 'bacon_and_egg'
             },
+
+            {
+                ingredients: ['Potato', 'Potato', 'Potato'],
+                appliance: 'Stove',
+                meal: 'Fries',
+                mealIcon: 'fries'
+            },
+
+            {
+                ingredients: ['Cheese', 'Flour', 'Water'],
+                appliance: 'Oven',
+                meal: 'Mac and Cheese',
+                mealIcon: 'mac_and_cheese'
+            },
+
+            {
+                ingredients: ['Fish', 'Fish', 'Fish'],
+                appliance: 'Stove',
+                meal: 'Salmon',
+                mealIcon: 'salmon'
+            },
             
+            {
+                ingredients: ['Egg', 'Flour', 'Strawberry'],
+                appliance: 'Oven',
+                meal: 'Strawberry Cake',
+                mealIcon: 'strawberry_cake'
+            },
+            
+            {
+                ingredients: ['Egg', 'Flour', 'Cocoa'],
+                appliance: 'Oven',
+                meal: 'Chocolate Cake',
+                mealIcon: 'chocolate_cake'
+            },
+
+            {
+                ingredients: ['Bacon', 'Bacon', 'Bacon'],
+                appliance: 'Stove',
+                meal: 'Cooked Bacon',
+                mealIcon: 'cooked_bacon'
+            },
+
+            {
+                ingredients: ['Cheese', 'Egg', 'Flour'],
+                appliance: 'Oven',
+                meal: 'Cheesecake',
+                mealIcon: 'cheesecake'
+            },
         ];
 	}
 
