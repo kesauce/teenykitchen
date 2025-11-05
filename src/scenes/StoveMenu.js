@@ -32,7 +32,7 @@ export default class StoveMenu extends Phaser.Scene {
         // Listen for hotbar click events
         this.game.events.on('hotbarClicked', this.onHotbarClicked, this);
 
-        this.initialiseStoveMenu();
+        this.initialiseStoveMenu();        
     }
 
     initialiseStoveMenu(){
@@ -45,10 +45,10 @@ export default class StoveMenu extends Phaser.Scene {
 
         // Add background and cancel button
         this.add.rectangle(menuX, menuY, menuWidth, menuHeight, 0xfadde1).setOrigin(0, 0).setInteractive();
-        this.add.image(menuWidth + 10, menuY - 15, "cancel").setOrigin(0).setDepth;
+        this.add.image(menuWidth + 10, menuY - 15, "cancel").setOrigin(0);
 
         // Makes the cancel button clickable
-        let cancelZone = this.add.zone(sizes.width - 54, 12, 42, 42).setOrigin(0).setInteractive({ useHandCursor: true }).setDepth(10);
+        let cancelZone = this.add.zone(menuWidth + 10, menuY - 15, 42, 42).setOrigin(0, 0).setInteractive({ useHandCursor: true });
 
         // If cancel is clicked then close the scene
         cancelZone.on('pointerdown', () => {
@@ -74,6 +74,13 @@ export default class StoveMenu extends Phaser.Scene {
         // Add the frying pan and select image
         this.add.image(menuWidth/2 - 30, menuHeight/2, "pan").setOrigin(0, 0).setScale(4);
         this.select = this.add.image(zoneX, zoneY, 'select').setOrigin(0, 0);
+
+        let panZone = this.add.zone(menuWidth/2 - 30, menuHeight/2, 130, 130).setOrigin(0, 0).setInteractive({ useHandCursor: true });
+        panZone.on('pointerdown', () => {
+            if (this.ingredients.length == 3){
+            this.cook();
+        }
+        });
 
         for (let i = 0; i < 3; i++) {
             let zone = this.add.zone(zoneX, zoneY, zoneWidth, zoneHeight).setOrigin(0, 0);
@@ -104,7 +111,6 @@ export default class StoveMenu extends Phaser.Scene {
             let ingredient = ingredients[zoneIndex];
             this.inventory.removeIngredient(zoneIndex);
             this.ingredients.push(ingredient);
-            console.log(this.ingredients);
 
             // Make ??? invisible and move over the select image
             this.questionText[this.selectedIndex].setVisible(false);
@@ -134,6 +140,22 @@ export default class StoveMenu extends Phaser.Scene {
         if (this.selectedIndex < 3){
             this.selectedIndex++;
             this.select.setX(80 + this.selectedIndex * 238);
+        }
+    }
+
+    cook(){
+        console.log("cooking");
+        // Check if there's a recipe for the ingredients
+        let recipe = {};
+        let ingredientNames = [];
+
+        this.ingredients.forEach(ing => {
+            ingredientNames.push(ing[0]);
+        });
+
+        if (this.recipes.findRecipe(ingredientNames, "Stove") != null){
+            recipe = this.recipes.findRecipe(ingredientNames, "Stove");
+            console.log("recipe found");
         }
     }
 }

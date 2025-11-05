@@ -7,11 +7,35 @@ export default class Recipes {
                 appliance: 'Stove',
                 meal: 'Pancake',
                 mealIcon: 'pancake'
-            }
+            },
+
+            {
+                ingredients: ['Egg', 'Egg', 'Egg'],
+                appliance: 'Stove',
+                meal: 'Sunny Side Up',
+                mealIcon: 'fried_egg'
+            },
+
+            {
+                ingredients: ['Egg', 'Egg', 'Milk'],
+                appliance: 'Stove',
+                meal: 'Omelette',
+                mealIcon: 'omelette'
+            },
+
+            {
+                ingredients: ['Bacon', 'Egg', 'Egg'],
+                appliance: 'Stove',
+                meal: 'Bacon and Egg',
+                mealIcon: 'bacon_and_egg'
+            },
+            
         ];
 	}
 
     findRecipe(ingredients, appliance){
+        let recipeReturn = null;
+
         // Sort the ingredients alphabetically
         ingredients.sort();
 
@@ -23,9 +47,9 @@ export default class Recipes {
                 if (ingredients[i] != recipe.ingredients[i]){ return; }
             }
 
-            return recipe;
+            recipeReturn = recipe;
         });
 
-        return null;
+        return recipeReturn;
     }
 }
