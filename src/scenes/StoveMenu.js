@@ -73,7 +73,9 @@ export default class StoveMenu extends Phaser.Scene {
         let zoneGap = 120;
 
         // Add the frying pan and select image
-        this.add.image(menuWidth/2 - 30, menuHeight/2, "pan").setOrigin(0, 0).setScale(4);
+        this.anims.createFromAseprite('pan');
+        let pan = this.add.sprite(menuWidth/2 - 30, menuHeight/2, "pan").setOrigin(0, 0).setScale(4);
+        pan.play({ key: 'moving_pan', repeat: -1 });
         this.select = this.add.image(zoneX, zoneY, 'select').setOrigin(0, 0);
 
         let panZone = this.add.zone(menuWidth/2 - 30, menuHeight/2, 130, 130).setOrigin(0, 0).setInteractive({ useHandCursor: true });
