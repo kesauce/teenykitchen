@@ -101,4 +101,28 @@ export default class Hotbar extends Phaser.Scene {
             repeat: -1             // Repeat forever
         });
     }
+
+    showMessage(text){
+        // Create a popup
+        const popupText = this.add.text(150, 220, text,
+            {
+                fontFamily: 'daydream',
+                fontSize: '30px',
+                color: '#8c2f39',
+                padding: { top: 4, bottom: 6 }
+            }
+            ).setOrigin(0, 0).setDepth(100);
+
+        // Fade the text out over 1.5 seconds, then destroy it
+        this.tweens.add({
+            targets: popupText,
+            alpha: 0,
+            y: popupText.y - 30, // move upward slightly
+            ease: 'Power1',
+            duration: 1500,
+            onComplete: () => {
+                popupText.destroy();
+            }
+        });
+    }
 }

@@ -34,6 +34,7 @@ export default class Fridge {
 		// Launch scene
 		this.scene.scene.launch("FridgeMenu");
 		this.scene.scene.bringToTop("FridgeMenu");
+		this.scene.scene.bringToTop("Hotbar"); 
 	}
 
 	close() {

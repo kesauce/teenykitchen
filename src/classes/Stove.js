@@ -34,6 +34,7 @@ export default class Stove {
 		// Launch scene
 		this.scene.scene.launch("StoveMenu");
 		this.scene.scene.bringToTop("StoveMenu");
+		this.scene.scene.bringToTop("Hotbar"); 
 	}
 
 	close() {

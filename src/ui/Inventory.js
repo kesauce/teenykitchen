@@ -2,8 +2,6 @@ export default class Inventory {
     constructor(scene) {
         this.scene = scene;
 
-        //this.ingredients = {};
-
         this.ingredients = [
             [],
             [],
@@ -21,12 +19,23 @@ export default class Inventory {
     }
 
     addIngredient(ingredient, icon) {
-        // If replacing another ingredient, ensure to destroy the popup if ever
-        if (this.ingredients[this.selectedIngredient][2] != null ) { this.ingredients[this.selectedIngredient][2].destroy(); }
-        let ingredientArray = [ingredient, icon];
-        this.ingredients[this.selectedIngredient] = ingredientArray;
-        this.displayInventory();
+        let isInventoryFull = true;
+        // Add the ingredient to the first free spot 
+        for (let i = 0; i < this.ingredients.length; i++) {
+            
+            if (this.ingredients[i].length == 0){
+                let ingredientArray = [ingredient, icon];
+                this.ingredients[i] = ingredientArray;
+                this.displayInventory();
+                isInventoryFull = false;
+                break;
+            }
+            
+        }
 
+        if (isInventoryFull) {
+            this.scene.scene.get('Hotbar').showMessage("Inventory Full!!");
+        }
     }
 
     removeIngredient(index) {
