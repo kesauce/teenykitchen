@@ -59,7 +59,8 @@ export default class StoveMenu extends Phaser.Scene {
         this.add.text(40, 40, 'Stove', {
             fontFamily: 'daydream',
             fontSize: '25px',
-            color: '#000000'
+            color: '#000000',
+            padding: { top: 4, bottom: 6 }
         });
 
         
@@ -78,16 +79,18 @@ export default class StoveMenu extends Phaser.Scene {
         let panZone = this.add.zone(menuWidth/2 - 30, menuHeight/2, 130, 130).setOrigin(0, 0).setInteractive({ useHandCursor: true });
         panZone.on('pointerdown', () => {
             if (this.ingredients.length == 3){
-            this.cook();
-        }
+                this.cook();
+            }
+            else {this.scene.get("Hotbar").showMessage("Not enough ingredients!!")}
         });
 
         for (let i = 0; i < 3; i++) {
             let zone = this.add.zone(zoneX, zoneY, zoneWidth, zoneHeight).setOrigin(0, 0);
-            let text = this.add.text(zoneX + 25, zoneY + 20, "???",{
+            let text = this.add.text(zoneX + 25, zoneY + 16, "???",{
                 fontFamily: 'daydream',
                 fontSize: '25px',
-                color: '#999999'
+                color: '#999999',
+                padding: { top: 4, bottom: 6 }
             });
             this.questionText.push(text);
 
@@ -144,7 +147,6 @@ export default class StoveMenu extends Phaser.Scene {
     }
 
     cook(){
-        console.log("cooking");
         // Check if there's a recipe for the ingredients
         let recipe = {};
         let ingredientNames = [];

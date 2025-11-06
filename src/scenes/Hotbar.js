@@ -104,14 +104,14 @@ export default class Hotbar extends Phaser.Scene {
 
     showMessage(text){
         // Create a popup
-        const popupText = this.add.text(150, 220, text,
+        const popupText = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 50, text,
             {
                 fontFamily: 'daydream',
                 fontSize: '30px',
                 color: '#8c2f39',
                 padding: { top: 4, bottom: 6 }
             }
-            ).setOrigin(0, 0).setDepth(100);
+            ).setOrigin(0.5).setDepth(100);
 
         // Fade the text out over 1.5 seconds, then destroy it
         this.tweens.add({

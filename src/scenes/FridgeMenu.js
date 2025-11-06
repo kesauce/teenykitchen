@@ -74,7 +74,8 @@ export default class FridgeMenu extends Phaser.Scene {
         this.add.text(40, 40, 'Fridge', {
             fontFamily: 'daydream',
             fontSize: '25px',
-            color: '#000000'
+            color: '#000000',
+            padding: { top: 4, bottom: 6 }
         });
     }
 
@@ -97,7 +98,7 @@ export default class FridgeMenu extends Phaser.Scene {
         // Display the name and icon of each ingredient and create a zone of it
         this.ingredients.forEach((ingredientArray) => {
             let icon = this.add.image(xAxis, yAxis - 15, ingredientArray[1]).setOrigin(0, 0).setScale(1.5);
-            let text = this.add.text(xAxis + 60, yAxis, ingredientArray[0], { fontSize: '16px', color: '#000', fontFamily: 'daydream' });
+            let text = this.add.text(xAxis + 60, yAxis, ingredientArray[0], { fontSize: '16px', color: '#000', fontFamily: 'daydream', padding: { top: 4, bottom: 6 } });
             this.ingredientsContainer.add(text);
             this.ingredientsContainer.add(icon);
 
