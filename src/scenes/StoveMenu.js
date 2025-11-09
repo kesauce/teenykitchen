@@ -60,8 +60,6 @@ export default class StoveMenu extends Phaser.Scene {
             zoneGap: 120
 
         }
-        
-        this.select = this.add.image(measurements.zoneX, measurements.zoneY, 'select').setOrigin(0, 0);
 
         this.createBackgroundAndCancel(measurements);
         this.createPan(measurements);
@@ -77,7 +75,7 @@ export default class StoveMenu extends Phaser.Scene {
         if (this.ingredients.length < 3 && !this.inventory.isEmptyAt(zoneIndex)){
             let ingredientArray = this.inventory.getInventory()[zoneIndex];
             this.inventory.removeIngredient(zoneIndex);
-            this.ingredients[zoneIndex] = [ingredientArray[0], ingredientArray[1]]; // Only add the name and icon of ingredient
+            this.ingredients[this.selectedIndex] = [ingredientArray[0], ingredientArray[1]]; // Only add the name and icon of ingredient
 
             this.questionText[this.selectedIndex].setVisible(false);
             this.updateSelection();
@@ -138,22 +136,18 @@ export default class StoveMenu extends Phaser.Scene {
             this.scene.get("Hotbar").showMessage("Rocks...?", "achievement");
         }
 
-        this.ingredients.forEach(ingredient => {
-            if (ingredient[2] != null){ ingredient[2].destroy(); }
-        });
-
-        this.ingredients = [];
-        this.updateStoveMenu();
-        this.scene.restart();
+        this.restartStoveMenu();
     }
 
     /**
-     * Initialises the background, cancel button, and label for the stove menu.
+     * Initialises the background, select image, cancel button, and label for the stove menu.
      * @param {StoveMeasurements} measurements 
      */
     createBackgroundAndCancel(measurements){
         this.add.rectangle(measurements.menuX, measurements.menuY, measurements.menuWidth, measurements.menuHeight, 0xfadde1).setOrigin(0, 0).setInteractive();
         
+        this.select = this.add.image(measurements.zoneX, measurements.zoneY, 'select').setOrigin(0, 0);
+
         this.add.image(measurements.menuWidth + 10, measurements.menuY - 15, "cancel").setOrigin(0);
         let cancelZone = this.add.zone(measurements.menuWidth + 10, measurements.menuY - 15, 42, 42).setOrigin(0, 0).setInteractive({ useHandCursor: true });
 
@@ -219,5 +213,18 @@ export default class StoveMenu extends Phaser.Scene {
             
             zoneX += measurements.zoneWidth + measurements.zoneGap;
         }
+    }
+
+    /**
+     * Re-initialises the ingredients array and select image.
+     */
+    restartStoveMenu(){
+        this.ingredients.forEach(ingredient => {
+            if (ingredient[2] != null){ ingredient[2].destroy(); }
+        });
+
+        this.ingredients = [[],[],[]];
+        this.updateStoveMenu();
+        this.scene.restart();
     }
 }
