@@ -34,7 +34,7 @@ export default class Inventory {
         }
 
         if (isInventoryFull) {
-            this.scene.scene.get('Hotbar').showMessage("Inventory Full!!");
+            this.scene.scene.get('Hotbar').showMessage("Inventory Full!!", "error");
         }
     }
 

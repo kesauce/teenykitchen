@@ -102,13 +102,26 @@ export default class Hotbar extends Phaser.Scene {
         });
     }
 
-    showMessage(text){
+    showMessage(text, type){
+        let msgColor;
+        switch(type){
+            default:
+                msgColor = "#000000";
+                break;
+            case "error":
+                msgColor = "#8c2f39";
+                break;
+            case "achievement":
+                msgColor = "#f26a8d";
+                break;
+        }
+
         // Create a popup
         const popupText = this.add.text(this.cameras.main.centerX, this.cameras.main.centerY - 50, text,
             {
                 fontFamily: 'daydream',
                 fontSize: '30px',
-                color: '#8c2f39',
+                color: msgColor,
                 padding: { top: 4, bottom: 6 }
             }
             ).setOrigin(0.5).setDepth(100);

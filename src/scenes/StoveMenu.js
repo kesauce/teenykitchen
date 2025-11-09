@@ -77,18 +77,20 @@ export default class StoveMenu extends Phaser.Scene {
         let zoneHeight = 70;
         let zoneGap = 120;
 
-        // Add the frying pan and select image
-        this.anims.createFromAseprite('pan');
+        this.select = this.add.image(zoneX, zoneY, 'select').setOrigin(0, 0);
+
+        // Add the frying pan
+        if (!this.anims.exists('moving_pan')) { this.anims.createFromAseprite('pan'); }
+
         let pan = this.add.sprite(menuWidth/2 - 30, menuHeight/2, "pan").setOrigin(0, 0).setScale(4);
         pan.play({ key: 'moving_pan', repeat: -1 });
-        this.select = this.add.image(zoneX, zoneY, 'select').setOrigin(0, 0);
 
         let panZone = this.add.zone(menuWidth/2 - 30, menuHeight/2, 130, 130).setOrigin(0, 0).setInteractive({ useHandCursor: true });
         panZone.on('pointerdown', () => {
             if (this.ingredients.length == 3){
                 this.cook();
             }
-            else {this.scene.get("Hotbar").showMessage("Not enough ingredients!!")}
+            else {this.scene.get("Hotbar").showMessage("Not enough ingredients!!", "error")}
         });
 
         for (let i = 0; i < 3; i++) {
@@ -166,11 +168,14 @@ export default class StoveMenu extends Phaser.Scene {
         if (this.recipes.findRecipe(ingredientNames, "Stove") != null){
             recipe = this.recipes.findRecipe(ingredientNames, "Stove");
             this.inventory.addIngredient(recipe.meal, recipe.mealIcon);
+
+            this.scene.get("Hotbar").showMessage(recipe.meal + "!!", "achievement")
         }
 
         // Add rocks to the inventory
         else {
             this.inventory.addIngredient("Rocks", "rocks");
+            this.scene.get("Hotbar").showMessage("Rocks...?", "achievement");
         }
 
         // Destroy all the ingredient images
@@ -179,5 +184,7 @@ export default class StoveMenu extends Phaser.Scene {
         });
         this.ingredients = [];
         this.updateStoveMenu();
+
+        this.scene.restart();
     }
 }
