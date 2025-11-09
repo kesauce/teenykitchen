@@ -50,8 +50,13 @@ export default class StoveMenu extends Phaser.Scene {
         // Makes the cancel button clickable
         let cancelZone = this.add.zone(menuWidth + 10, menuY - 15, 42, 42).setOrigin(0, 0).setInteractive({ useHandCursor: true });
 
-        // If cancel is clicked then close the scene
+        // If cancel is clicked then close the scene and return all ingredients to inventory
         cancelZone.on('pointerdown', () => {
+            if (this.selectedIndex > -1){
+                this.ingredients.forEach(ingredient => {
+                    this.inventory.addIngredient(ingredient[0], ingredient[1]);
+                });
+            }
             this.stove.close();
         });
 
@@ -129,8 +134,6 @@ export default class StoveMenu extends Phaser.Scene {
         let ingY = 100;
         let gap = 238;
 
-        console.log(this.ingredients);
-
         // Display all the stove ingredients
         this.ingredients.forEach((ingredient, i) => {
             // Destroy and redraw all the images
@@ -171,13 +174,8 @@ export default class StoveMenu extends Phaser.Scene {
         }
 
         // Destroy all the ingredient images
-        
-        this.ingredients.forEach((ingredient, i) => {
-            console.log(ingredient[2]);
-            // Destroy all the images
-            if (ingredient[2] != null){
-                ingredient[2].destroy();
-            }
+        this.ingredients.forEach(ingredient => {
+            if (ingredient[2] != null){ ingredient[2].destroy(); }
         });
         this.ingredients = [];
         this.updateStoveMenu();
