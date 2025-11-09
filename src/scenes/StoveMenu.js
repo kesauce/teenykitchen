@@ -112,10 +112,9 @@ export default class StoveMenu extends Phaser.Scene {
         // Only add if stove has < 3 ingredients
         if (this.ingredients.length < 3 && !this.inventory.isEmptyAt(zoneIndex)){
             // Grab the ingredient of the clicked zone, remove it from inventory, and add to the stove
-            let ingredients = this.inventory.getInventory();
-            let ingredient = ingredients[zoneIndex];
+            let ingredientArray = this.inventory.getInventory()[zoneIndex];
             this.inventory.removeIngredient(zoneIndex);
-            this.ingredients.push(ingredient);
+            this.ingredients[zoneIndex] = [ingredientArray[0], ingredientArray[1]]; // Only add the name and icon of ingredient
 
             // Make ??? invisible and move over the select image
             this.questionText[this.selectedIndex].setVisible(false);
@@ -130,13 +129,17 @@ export default class StoveMenu extends Phaser.Scene {
         let ingY = 100;
         let gap = 238;
 
+        console.log(this.ingredients);
+
         // Display all the stove ingredients
-        this.ingredients.forEach(ingredient => {
-            // Destroy all the images
-            if (ingredient[3] != null){
-                ingredient[3].destroy();
+        this.ingredients.forEach((ingredient, i) => {
+            // Destroy and redraw all the images
+            if (ingredient[2] != null){
+                ingredient[2].destroy();
+                ingredient.pop();
             }
             ingredient.push(this.add.image(ingX, ingY, ingredient[1]).setOrigin(0, 0).setScale(2));
+            this.ingredients[i] = ingredient;
             ingX += gap;
         });
     }
@@ -166,5 +169,17 @@ export default class StoveMenu extends Phaser.Scene {
         else {
             this.inventory.addIngredient("Rocks", "rocks");
         }
+
+        // Destroy all the ingredient images
+        
+        this.ingredients.forEach((ingredient, i) => {
+            console.log(ingredient[2]);
+            // Destroy all the images
+            if (ingredient[2] != null){
+                ingredient[2].destroy();
+            }
+        });
+        this.ingredients = [];
+        this.updateStoveMenu();
     }
 }
