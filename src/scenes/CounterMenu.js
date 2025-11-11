@@ -1,7 +1,7 @@
 import Recipes from '../classes/Recipes.js'
 
 /**
- * @typedef {Object} StoveMeasurements
+ * @typedef {Object} CounterMeasurements
  * @property {number} menuX - X position of the menu.
  * @property {number} menuY - Y position of the menu.
  * @property {number} menuWidth - Width of the menu.
@@ -67,11 +67,11 @@ export default class CounterMenu extends Phaser.Scene {
     }
 
     /**
-     * Transfers the ingredient from the inventory to the stove if there are enough spaces on the stove.
+     * Transfers the ingredient from the inventory to the counter if there are enough spaces on the counter.
      * @param {number} zoneIndex 
      */
     onHotbarClicked(zoneIndex){
-        if (this.ingredients.length < 3 && !this.inventory.isEmptyAt(zoneIndex)){
+        if (this.scene.isActive() && this.ingredients.length < 3 && !this.inventory.isEmptyAt(zoneIndex)){
             let ingredientArray = this.inventory.getInventory()[zoneIndex];
             this.inventory.removeIngredient(zoneIndex);
             this.ingredients[this.selectedIndex] = [ingredientArray[0], ingredientArray[1]]; // Only add the name and icon of ingredient
@@ -135,12 +135,12 @@ export default class CounterMenu extends Phaser.Scene {
             this.scene.get("Hotbar").showMessage("Rocks...?", "achievement");
         }
 
-        this.restartStoveMenu();
+        this.restartCounterMenu();
     }
 
     /**
      * Initialises the background, select image, cancel button, and label for the counter menu.
-     * @param {StoveMeasurements} measurements 
+     * @param {CounterMeasurements} measurements 
      */
     createBackgroundAndCancel(measurements){
         this.add.rectangle(measurements.menuX, measurements.menuY, measurements.menuWidth, measurements.menuHeight, 0xfadde1).setOrigin(0, 0).setInteractive();
@@ -156,6 +156,7 @@ export default class CounterMenu extends Phaser.Scene {
                     this.inventory.addIngredient(ingredient[0], ingredient[1]);
                 });
             }
+            this.restartCounterMenu();
             this.counter.close();
         });
 
@@ -169,7 +170,7 @@ export default class CounterMenu extends Phaser.Scene {
 
     /**
      * Intialises the bowl animation and its zone.
-     * @param {StoveMeasurements} measurements 
+     * @param {CounterMeasurements} measurements 
      */
     createBowl(measurements){
         if (!this.anims.exists('moving_bowl')) { this.anims.createFromAseprite('bowl'); }
@@ -188,7 +189,7 @@ export default class CounterMenu extends Phaser.Scene {
 
     /**
      * Initialises the zones each of the ingredient zones.
-     * @param {StoveMeasurements} measurements 
+     * @param {CounterMeasurements} measurements 
      */
     createZones(measurements){
         let zoneX = measurements.zoneX;
@@ -217,7 +218,7 @@ export default class CounterMenu extends Phaser.Scene {
     /**
      * Re-initialises the ingredients array and select image.
      */
-    restartStoveMenu(){
+    restartCounterMenu(){
         this.ingredients.forEach(ingredient => {
             if (ingredient[2] != null){ ingredient[2].destroy(); }
         });

@@ -72,7 +72,7 @@ export default class StoveMenu extends Phaser.Scene {
      * @param {number} zoneIndex 
      */
     onHotbarClicked(zoneIndex){
-        if (this.ingredients.length < 3 && !this.inventory.isEmptyAt(zoneIndex)){
+        if (this.scene.isActive() && this.ingredients.length < 3 && !this.inventory.isEmptyAt(zoneIndex)){
             let ingredientArray = this.inventory.getInventory()[zoneIndex];
             this.inventory.removeIngredient(zoneIndex);
             this.ingredients[this.selectedIndex] = [ingredientArray[0], ingredientArray[1]]; // Only add the name and icon of ingredient
