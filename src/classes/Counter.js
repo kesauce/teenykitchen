@@ -27,26 +27,26 @@ export default class Counter {
 	}
 
 	open() {
-		// // Disable clicks and hover
-		// this.zone.disableInteractive();
-		// this.scene.input.setDefaultCursor('default');
+		// Disable clicks and hover
+		this.zone.disableInteractive();
+		this.scene.input.setDefaultCursor('default');
 
-		// // Launch scene
-		// this.scene.scene.launch("StoveMenu");
-		// this.scene.scene.bringToTop("StoveMenu");
-		// this.scene.scene.bringToTop("Hotbar"); 
+		// Launch scene
+		this.scene.scene.launch("CounterMenu");
+		this.scene.scene.bringToTop("CounterMenu");
+		this.scene.scene.bringToTop("Hotbar"); 
 	}
 
 	close() {
-		// // Re-enable clicks and hover
-		// this.zone.setInteractive({ useHandCursor: true });
-		// this.scene.input.setDefaultCursor('default');
+		// Re-enable clicks and hover
+		this.zone.setInteractive({ useHandCursor: true });
+		this.scene.input.setDefaultCursor('default');
 
-		// // Delete the scene
-		// this.scene.scene.stop("StoveMenu");
+		// Delete the scene
+		this.scene.scene.stop("CounterMenu");
 
-		// // Close the 
-		// this.openImage.setVisible(false);
+		// Close the 
+		this.openImage.setVisible(false);
 	}
 
 }
