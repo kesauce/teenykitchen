@@ -5,6 +5,7 @@ import Fridge from '../classes/Fridge.js';
 import Stove from '../classes/Stove.js';
 import Oven from '../classes/Oven.js';
 import Sink from '../classes/Sink.js';
+import Counter from '../classes/Counter.js';
 import Inventory from '../ui/Inventory.js';
 
 export default class Kitchen extends Phaser.Scene {
@@ -15,6 +16,7 @@ export default class Kitchen extends Phaser.Scene {
         this.stove;
         this.oven;
         this.sink;
+        this.counter;
         this.inventory;
 
     }
@@ -26,6 +28,7 @@ export default class Kitchen extends Phaser.Scene {
         this.load.image("stoveon", "/assets/kitchen/stoveon.png");
         this.load.image("ovenon", "/assets/kitchen/ovenon.png");
         this.load.image("sinkon", "/assets/kitchen/sinkon.png");
+        this.load.image("counteron", "/assets/kitchen/counteron.png")
 
         // Preload ingredients
         this.load.image("milk_bottle", "/assets/ingredients/milk_bottle.png");
@@ -51,7 +54,6 @@ export default class Kitchen extends Phaser.Scene {
         this.load.image("hotbar", "/assets/ui/hotbar.png");
         this.load.image("select", "/assets/ui/select.png");
         this.load.image("ingredient_select", "/assets/ui/ingredientselect.png");
-        //this.load.image("pan", "/assets/ui/pan.png");
         this.load.aseprite("pan", '/assets/ui/pan_anim/pan.png', '/assets/ui/pan_anim/pan.json');
 
         // Preload meals
@@ -72,6 +74,7 @@ export default class Kitchen extends Phaser.Scene {
         this.registry.set('stove', this.stove);
         this.registry.set('oven', this.oven);
         this.registry.set('sink', this.sink);
+        this.registry.set('counter', this.counter);
         this.registry.set('inventory', this.inventory);
 
 
@@ -95,6 +98,7 @@ export default class Kitchen extends Phaser.Scene {
         this.oven = new Oven(this);
         this.sink = new Sink(this);
         this.inventory = new Inventory(this);
+        this.counter = new Counter(this);
     }
 
     createUI() {
