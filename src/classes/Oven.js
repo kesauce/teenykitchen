@@ -27,7 +27,26 @@ export default class Oven {
 	}
 
 	open() {
+		// Disable clicks and hover
+		this.zone.disableInteractive();
+		this.scene.input.setDefaultCursor('default');
 
+		// Launch scene
+		this.scene.scene.launch("OvenMenu");
+		this.scene.scene.bringToTop("OvenMenu");
+		this.scene.scene.bringToTop("Hotbar"); 
+	}
+
+	close() {
+		// Re-enable clicks and hover
+		this.zone.setInteractive({ useHandCursor: true });
+		this.scene.input.setDefaultCursor('default');
+
+		// Delete the scene
+		this.scene.scene.stop("OvenMenu");
+
+		// Close the 
+		this.openImage.setVisible(false);
 	}
 
 }

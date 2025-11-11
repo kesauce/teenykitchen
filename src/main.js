@@ -5,6 +5,7 @@ import FridgeMenu from './scenes/FridgeMenu.js';
 import Hotbar from './scenes/Hotbar.js';
 import StoveMenu from './scenes/StoveMenu.js';
 import CounterMenu from './scenes/CounterMenu.js';
+import OvenMenu from './scenes/OvenMenu.js';
 
 // Creating constant variables
 const sizes = {
@@ -20,7 +21,7 @@ const config = {
 	canvas: gameCanvas,
 	pixelArt: true,   // keeps crisp edges
 
-	scene: [Kitchen, FridgeMenu, Hotbar, StoveMenu, CounterMenu]
+	scene: [Kitchen, FridgeMenu, Hotbar, StoveMenu, CounterMenu, OvenMenu]
 
 }
 
