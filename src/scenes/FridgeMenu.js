@@ -23,7 +23,11 @@ export default class FridgeMenu extends Phaser.Scene {
             ['Fish', 'fish'],
             ['Strawberry', 'strawberry'],
             ['Grape', 'grape'],
-            ['Bacon', 'bacon']
+            ['Bacon', 'bacon'],
+            ['Cheese', 'cheese'],
+            ['Water', 'water'],
+            ['Raw Beef', 'raw_beef'],
+            ['Raw Chicken', 'raw_chicken']
         ];
         this.fridge;
         this.inventory;

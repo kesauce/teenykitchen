@@ -48,6 +48,10 @@ export default class Kitchen extends Phaser.Scene {
         this.load.image('bacon', '/assets/ingredients/bacon.png');
         this.load.image('cheese', '/assets/ingredients/cheese.png');
         this.load.image('water', '/assets/ingredients/water.png');
+        this.load.image('raw_beef', '/assets/ingredients/raw_beef.png');
+        this.load.image('raw_chicken', '/assets/ingredients/raw_chicken.png');
+        this.load.image('ice_cream', '/assets/ingredients/ice_cream.png');
+        this.load.image('raw_sausage', '/assets/ingredients/raw_sausage.png');
 
         // Preload UI
         this.load.image("cancel", "/assets/ui/cancel.png");
@@ -63,7 +67,32 @@ export default class Kitchen extends Phaser.Scene {
         this.load.image('fried_egg', '/assets/food/fried_egg.png');
         this.load.image('omelette', '/assets/food/omelette.png');
         this.load.image('bacon_and_egg', '/assets/food/bacon_and_egg.png');
-        this.load.image('rocks', '/assets/food/rocks.png')
+        this.load.image('rocks', '/assets/food/rocks.png');
+        this.load.image('fries', '/assets/food/fries.png');
+        this.load.image('mac_and_cheese', '/assets/food/mac_and_cheese.png');
+        this.load.image('rocks', '/assets/food/rocks.png');
+        this.load.image('cooked_salmon', '/assets/food/cooked_salmon.png');
+        this.load.image('strawberry_cake', '/assets/food/strawberry_cake.png');
+        this.load.image('chocolate_cake', '/assets/food/chocolate_cake.png');
+        this.load.image('cooked_bacon', '/assets/food/cooked_bacon.png');
+        this.load.image('cheesecake', '/assets/food/cheesecake.png');
+        this.load.image('chocolate', '/assets/food/chocolate.png');
+        this.load.image('cookies', '/assets/food/cookies.png');
+        this.load.image('bread', '/assets/food/bread.png');
+        this.load.image('donuts', '/assets/food/donuts.png');
+        this.load.image('strawberry_jam', '/assets/food/strawberry_am.png');
+        this.load.image('jam_and_bread', '/assets/food/jam_and_bread.png');
+        this.load.image('buns', '/assets/food/bun.png');
+        this.load.image('steak', '/assets/food/steak.png');
+        this.load.image('roasted_chicken', '/assets/food/roasted_chicken.png');
+        this.load.image('burger', '/assets/food/burger.png');
+        this.load.image('pizza', '/assets/food/pizza.png');
+        this.load.image('sandwich', '/assets/food/sandwich.png');
+        this.load.image('bagel', '/assets/food/bagel.png');
+        this.load.image('neapolitan', '/assets/food/neapolitan.png');
+        this.load.image('pudding', '/assets/food/pudding.png');
+        this.load.image('sushi', '/assets/food/sushi.png');
+        this.load.image('hotdog', '/assets/food/hotdog.png');
 
     }
 

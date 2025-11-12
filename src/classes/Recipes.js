@@ -38,7 +38,7 @@ export default class Recipes {
             },
 
             {
-                ingredients: ['Cheese', 'Flour', 'Water'],
+                ingredients: ['Cheese', 'Cheese', 'Flour'],
                 appliance: 'Oven',
                 meal: 'Mac and Cheese',
                 mealIcon: 'mac_and_cheese'
@@ -47,8 +47,8 @@ export default class Recipes {
             {
                 ingredients: ['Fish', 'Fish', 'Fish'],
                 appliance: 'Stove',
-                meal: 'Salmon',
-                mealIcon: 'salmon'
+                meal: 'Cooked Salmon',
+                mealIcon: 'cooked_salmon'
             },
             
             {
@@ -59,7 +59,7 @@ export default class Recipes {
             },
             
             {
-                ingredients: ['Egg', 'Flour', 'Cocoa'],
+                ingredients: ['Chocolate', 'Egg', 'Flour'],
                 appliance: 'Oven',
                 meal: 'Chocolate Cake',
                 mealIcon: 'chocolate_cake'
@@ -78,6 +78,126 @@ export default class Recipes {
                 meal: 'Cheesecake',
                 mealIcon: 'cheesecake'
             },
+            
+            {
+                ingredients: ['Cocoa Powder', 'Cocoa Powder', 'Cocoa Powder'],
+                appliance: 'Counter',
+                meal: 'Chocolate',
+                mealIcon: 'chocolate'
+            },
+
+            {
+                ingredients: ['Chocolate', 'Egg', 'Sugar'],
+                appliance: 'Oven',
+                meal: 'Cookies',
+                mealIcon: 'cookies'
+            },
+
+            {
+                ingredients: ['Egg', 'Flour', 'Water'],
+                appliance: 'Oven',
+                meal: 'Bread',
+                mealIcon: 'bread'
+            },
+
+            {
+                ingredients: ['Egg', 'Flour', 'Sugar'],
+                appliance: 'Stove',
+                meal: 'Donuts',
+                mealIcon: 'donuts'
+            },
+
+            {
+                ingredients: ['Strawberry', 'Strawberry', 'Sugar'],
+                appliance: 'Counter',
+                meal: 'Strawberry Jam',
+                mealIcon: 'strawberry_jam'
+            },
+
+            {
+                ingredients: ['Bread', 'Bread', 'Strawberry'],
+                appliance: 'Counter',
+                meal: 'Jam and Bread',
+                mealIcon: 'jam_and_bread'
+            },
+
+            {
+                ingredients: ['Bread', 'Bread', 'Bread'],
+                appliance: 'Counter',
+                meal: 'Buns',
+                mealIcon: 'buns'
+            },
+
+            {
+                ingredients: ['Raw Beef', 'Raw Beef', 'Raw Beef'],
+                appliance: 'Stove',
+                meal: 'Steak',
+                mealIcon: 'steak'
+            },
+
+            {
+                ingredients: ['Raw Chicken', 'Raw Chicken', 'Raw Chicken'],
+                appliance: 'Oven',
+                meal: 'Roasted Chicken',
+                mealIcon: 'roasted_chicken'
+            },
+
+            {
+                ingredients: ['Bun', 'Bun', 'Steak'],
+                appliance: 'Stove',
+                meal: 'Burger',
+                mealIcon: 'burger'
+            },
+
+            {
+                ingredients: ['Cheese', 'Flour', 'Water'],
+                appliance: 'Oven',
+                meal: 'Pizza',
+                mealIcon: 'pizza'
+            },
+
+            {
+                ingredients: ['Bread', 'Bread', 'Egg'],
+                appliance: 'Stove',
+                meal: 'Sandwich',
+                mealIcon: 'sandwich'
+            },
+
+            {
+                ingredients: ['Egg', 'Flour', 'Water'],
+                appliance: 'Stove',
+                meal: 'Bagel',
+                mealIcon: 'bagel'
+            },
+
+            {
+                ingredients: ['Chocolate', 'Ice Cream', 'Strawberry'],
+                appliance: 'Counter',
+                meal: 'Neapolitan Ice Cream',
+                mealIcon: 'neapolitan'
+            },
+
+            {
+                ingredients: ['Butter', 'Milk', 'Sugar'],
+                appliance: 'Counter',
+                meal: 'Pudding',
+                mealIcon: 'pudding'
+            },
+
+            {
+                ingredients: ['Fish', 'Fish', 'Rice'],
+                appliance: 'Counter',
+                meal: 'Sushi',
+                mealIcon: 'sushi'
+            },
+
+            {
+                ingredients: ['Bun', 'Bun', 'Raw Sausage'],
+                appliance: 'Stove',
+                meal: 'Hotdog',
+                mealIcon: 'hotdog'
+            }
+
         ];
 	}
 
