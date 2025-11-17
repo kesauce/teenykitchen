@@ -53,7 +53,7 @@ export default class Inventory {
         this.ingredients.forEach(ingredientArray => {
              // Display the image of the ingredient
             let iconName = ingredientArray[1];
-            let iconImage = this.scene.add.image(xAxis, 460, iconName).setOrigin(0, 0).setScale(2);
+            let iconImage = this.scene.add.image(xAxis, 460, iconName).setOrigin(0, 0).setScale(2).setDepth(2);
 
             // Keep track of the showing icons
             this.shownIcons.push(iconImage);

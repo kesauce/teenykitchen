@@ -7,6 +7,7 @@ import Oven from '../classes/Oven.js';
 import Sink from '../classes/Sink.js';
 import Counter from '../classes/Counter.js';
 import Inventory from '../ui/Inventory.js';
+import Nova from '../ui/Nova.js'
 
 export default class Kitchen extends Phaser.Scene {
     constructor() {
@@ -18,6 +19,7 @@ export default class Kitchen extends Phaser.Scene {
         this.sink;
         this.counter;
         this.inventory;
+        this.nova;
 
     }
 
@@ -61,6 +63,7 @@ export default class Kitchen extends Phaser.Scene {
         this.load.aseprite("pan", '/assets/ui/pan_anim/pan.png', '/assets/ui/pan_anim/pan.json');
         this.load.aseprite("bowl", '/assets/ui/bowl_anim/bowl.png', '/assets/ui/bowl_anim/bowl.json');
         this.load.aseprite("oven", '/assets/ui/oven_anim/oven.png', '/assets/ui/oven_anim/oven.json');
+        this.load.aseprite("nova_walk", '/assets/ui/nova_anim/nova_walk.png', '/assets/ui/nova_anim/nova_walk.json');
 
         // Preload meals
         this.load.image('pancake', '/assets/food/pancake.png');
@@ -80,7 +83,7 @@ export default class Kitchen extends Phaser.Scene {
         this.load.image('cookies', '/assets/food/cookies.png');
         this.load.image('bread', '/assets/food/bread.png');
         this.load.image('donuts', '/assets/food/donuts.png');
-        this.load.image('strawberry_jam', '/assets/food/strawberry_am.png');
+        this.load.image('strawberry_jam', '/assets/food/strawberry_jam.png');
         this.load.image('jam_and_bread', '/assets/food/jam_and_bread.png');
         this.load.image('buns', '/assets/food/bun.png');
         this.load.image('steak', '/assets/food/steak.png');
@@ -108,7 +111,7 @@ export default class Kitchen extends Phaser.Scene {
         this.registry.set('counter', this.counter);
         this.registry.set('inventory', this.inventory);
 
-
+        this.startGame();
     }
 
 
@@ -117,7 +120,7 @@ export default class Kitchen extends Phaser.Scene {
 
     createKitchen() {
         // Add the kitchen background
-        let bg = this.add.image(0, 0, "bg").setOrigin(0, 0);
+        let bg = this.add.image(0, 0, "bg").setOrigin(0, 0).setDepth(0);
 
         bg.setScale(
             this.cameras.main.width / bg.width,
@@ -136,11 +139,20 @@ export default class Kitchen extends Phaser.Scene {
         const sizes = this.registry.get('sizes');
 
         // Adding the hotbar and the select icon to the screen
-        this.add.image(15, sizes.height - 82, "hotbar").setOrigin(0, 0);
+        this.add.image(15, sizes.height - 82, "hotbar").setOrigin(0, 0).setDepth(2);
         
         this.inventory.displayInventory();
         this.scene.launch('Hotbar');
         this.scene.bringToTop('Hotbar');
+    }
 
+    /**
+     * Plays the opening cutscene of Nova coming in and asking for food.
+     */
+    startGame(){
+        const sizes = this.registry.get('sizes');
+
+        this.nova = new Nova(this);
+        
     }
 }

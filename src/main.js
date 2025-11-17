@@ -1,5 +1,5 @@
 import './style.css';
-import Phaser from 'phaser';
+import Phaser, { Physics } from 'phaser';
 import Kitchen from './scenes/Kitchen.js'
 import FridgeMenu from './scenes/FridgeMenu.js';
 import Hotbar from './scenes/Hotbar.js';
@@ -19,8 +19,14 @@ const config = {
 	width: sizes.width,
 	height: sizes.height,
 	canvas: gameCanvas,
-	pixelArt: true,   // keeps crisp edges
-
+	pixelArt: true,
+	physics: {
+        default: 'arcade',
+        arcade: {
+            gravity: { y: 0 },
+            debug: false
+        }
+    },
 	scene: [Kitchen, FridgeMenu, Hotbar, StoveMenu, CounterMenu, OvenMenu]
 
 }
