@@ -137,7 +137,6 @@ export default class Kitchen extends Phaser.Scene {
         this.sink = new Sink(this);
         this.inventory = new Inventory(this);
         this.counter = new Counter(this);
-        this.nova = new Nova(this);
     }
 
     createUI() {
@@ -157,5 +156,6 @@ export default class Kitchen extends Phaser.Scene {
     startGame(){
         const sizes = this.registry.get('sizes');
         
+        this.nova = new Nova(this);
     }
 }

@@ -13,11 +13,16 @@ export default class Inventory {
 
         this.shownIcons = [];
 
-        this.selectedIngredient = 0; // Index of selected
+        this.selectedIndex = 0; // Index of selected
 
         this.MAX_INGREDIENTS = 5;
     }
 
+    /**
+     * Adds the ingredient to the inventory in any free available slot.
+     * @param {String} ingredient Name of the ingredient.
+     * @param {String} icon Name of the reference to the ingredient icon.
+     */
     addIngredient(ingredient, icon) {
         let isInventoryFull = true;
         // Add the ingredient to the first free spot 
@@ -38,6 +43,10 @@ export default class Inventory {
         }
     }
 
+    /**
+     * Removes the ingredient at the given index.
+     * @param {number} index Index of the ingredient to be removed.
+     */
     removeIngredient(index) {
         // Destroy popup if ever
         if (this.ingredients[index][2] != null ) { this.ingredients[index][2].destroy(); }
@@ -45,6 +54,9 @@ export default class Inventory {
         this.displayInventory();
     }
 
+    /**
+     * Deletes and redisplays all the ingredients on the hotbar.
+     */
     displayInventory() {
         // Destroy all icons
         this.shownIcons.forEach(icon => { icon.destroy(); });
@@ -63,6 +75,10 @@ export default class Inventory {
 
     }
 
+    /**
+     * Displays the name of the ingredient at the given index at the top left corner.
+     * @param {number} i Index of the popup's ingredient.
+     */
     displayPopup(i){
         // Get the name of the ingredient of the given index and create its text
         let name = this.ingredients[i][0];
@@ -72,6 +88,10 @@ export default class Inventory {
         this.ingredients[i].push( this.scene.add.text(xAxis, yAxis, name, { fontSize: '10px', color: '#000', fontFamily: 'daydream' }));
     }
 
+    /**
+     * Destroys the text object of the ingredient.
+     * @param {number} i Index of the popup's ingredient.
+     */
     destroyPopup(i){
         if(this.ingredients[i][2] != null){
             this.ingredients[i][2].destroy();
@@ -80,26 +100,55 @@ export default class Inventory {
         
     }
 
+    /**
+     * Moves the selection bar to the left, if possible.
+     */
     increaseSelection() {
-        if (this.selectedIngredient < this.MAX_INGREDIENTS - 1) {
-            this.selectedIngredient += 1;
+        if (this.selectedIndex < this.MAX_INGREDIENTS - 1) {
+            this.selectedIndex += 1;
             this.displayInventory();
         }
     }
 
+    /**
+     * Moves the selection bar to the right, is possible.
+     */
     decreaseSelection() {
-        if (this.selectedIngredient > 0) {
-            this.selectedIngredient -= 1;
+        if (this.selectedIndex > 0) {
+            this.selectedIndex -= 1;
             this.displayInventory();
         }
     }
 
-    getSelected() { return this.selectedIngredient; }
+    /**
+     * Returns the index of the selected ingredient in the inventory.
+     * @returns {number} Index of the selected ingredient.
+     */
+    getSelectedIndex() { return this.selectedIndex; }
 
-    setSelected(i) { this.selectedIngredient = i; }
+    /**
+     * Returns the name of the selected ingredient.
+     * @returns {String} The name of the selected ingredient
+     */
+    getSelectedIngredient() { return this.ingredients[this.selectedIndex][0]; }
 
+    /**
+     * Sets the index of the selection bar to this slot, whether empty or not.
+     * @param {number} i Index to be selected. 
+     */
+    setSelectedIndex(i) { this.selectedIndex = i; }
+
+    /**
+     * Returns all the ingredients.
+     * @returns {Array} A nested array of the ingredients.
+     */
     getInventory(){ return this.ingredients; }
 
+    /**
+     * Checks if the inventory contains the given ingredient.
+     * @param {String} ingredient The name of the ingredient to find.
+     * @returns {number} The index of the search ingredient. Returns -1 if it doesn't exist.
+     */
     containsIngredient(ingredient){
         this.ingredients.forEach((ingredientArray, i) => {
             if (ingredientArray[0] == ingredient) { return i; }
@@ -108,6 +157,11 @@ export default class Inventory {
         return -1;
     }
 
+    /**
+     * Checks if an inventory slot is empty at the given index.
+     * @param {integer} index The index of the inventory slot to be checked.
+     * @returns {boolean} True if it's empty, false if not.
+     */
     isEmptyAt(index){
         if (this.ingredients[index].length != 0) { return false; }
         else { return true; }

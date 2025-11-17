@@ -220,4 +220,6 @@ export default class Recipes {
 
         return recipeReturn;
     }
+
+    getRecipes() { return this.recipes; }
 }

@@ -43,7 +43,7 @@ export default class Hotbar extends Phaser.Scene {
                     this.inventory.removeIngredient(zoneIndex); 
                 }
                 else{
-                    this.inventory.setSelected(zoneIndex);
+                    this.inventory.setSelectedIndex(zoneIndex);
                 }
                 
                 // Emit a global event
@@ -91,7 +91,7 @@ export default class Hotbar extends Phaser.Scene {
         if (this.selectedIcon) this.selectedIcon.destroy();
 
         // Display the new select bar
-        let selectionOffset = 30 + (this.inventory.getSelected() * 146)
+        let selectionOffset = 30 + (this.inventory.getSelectedIndex() * 146)
         this.selectedIcon = this.add.image(selectionOffset, 458, "select").setOrigin(0, 0);
         this.tweens.add({
             targets: this.selectedIcon,
