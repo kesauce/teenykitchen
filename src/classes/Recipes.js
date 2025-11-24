@@ -201,7 +201,13 @@ export default class Recipes {
         ];
 	}
 
-    findRecipe(ingredients, appliance){
+    /**
+     * Finds the dictionary containing the ingredients, appliance, meal name, and meal icon using its ingredients and appliance.
+     * @param {Array} ingredients 
+     * @param {String} appliance 
+     * @returns The dictionary or recipe of the meal created
+     */
+    findRecipeByIngredients(ingredients, appliance){
         let recipeReturn = null;
 
         // Sort the ingredients alphabetically
@@ -221,5 +227,46 @@ export default class Recipes {
         return recipeReturn;
     }
 
+    /**
+     * Finds the dictionary containing the ingredients, appliance, meal name, and meal icon using the meal name.
+     * @param {String} meal 
+     */
+    findRecipeByMeal(meal){
+        let recipeReturn = null;
+
+        this.recipes.forEach(recipe => {
+            if(recipe.meal == meal){ 
+                recipeReturn = recipe;
+                return; 
+            }
+        });
+
+        return recipeReturn;
+    }
+
+    /**
+     * Checks if the given meal name exists in the recipes.
+     * @param {String} meal 
+     */
+    mealExists(meal){
+        let mealExists = false;
+
+        if (meal == null){ return mealExists; }
+        meal = meal.charAt(0).toUpperCase() + meal.slice(1);
+
+        this.recipes.forEach(recipe => {
+            if (recipe.meal == meal){ 
+                mealExists = true;
+                return;
+            }
+        });
+
+        return mealExists;
+    }
+
+    /**
+     * Returns the array of dictionaries containing the recipes.
+     * @returns Array of dictionaries containing the recipes
+     */
     getRecipes() { return this.recipes; }
 }

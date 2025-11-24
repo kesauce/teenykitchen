@@ -124,8 +124,8 @@ export default class CounterMenu extends Phaser.Scene {
             ingredientNames.push(ing[0]);
         });
 
-        if (this.recipes.findRecipe(ingredientNames, "Counter") != null){
-            recipe = this.recipes.findRecipe(ingredientNames, "Counter");
+        if (this.recipes.findRecipeByIngredients(ingredientNames, "Counter") != null){
+            recipe = this.recipes.findRecipeByIngredients(ingredientNames, "Counter");
             this.inventory.addIngredient(recipe.meal, recipe.mealIcon);
 
             this.scene.get("Hotbar").showMessage(recipe.meal + "!!", "achievement")

@@ -6,7 +6,8 @@ export default class Nova{
 
         this.nova;
         this.importantDialogue = [
-            'that is your job, not mine',
+            'be careful what you bring me',
+            'i will eat anything in your hands',
             'cook something first',
             'hand me a meal',
             'you are empty-handed'
@@ -26,7 +27,9 @@ export default class Nova{
         this.isTalking = false;
         this.zone;
         this.inventory = this.scene.registry.get('inventory');
+        this.recipes = new Recipes();
         this.favoriteMeal;
+        this.attemptsLeft = 5;
         
         this.playInitialAnimation();
         this.initialiseFavorite();
@@ -59,7 +62,16 @@ export default class Nova{
                 this.zone = this.scene.add.zone(320, 255, 100, 120).setOrigin(0, 0).setInteractive({ useHandCursor: true }).setDepth(5);
                 this.zone.on('pointerdown', () => {
                     if (!this.isTalking){
-                        if (this.importantDialogue.length != 0){
+                        let currentMeal = this.inventory.getSelectedIngredient();
+                        if (currentMeal != null){
+                            if (currentMeal == "Rocks"){ this.talk("i'm not eating that"); }
+                            else if (!this.recipes.mealExists(currentMeal)){ this.talk("prepare it for me"); }
+                            else{
+                                let currentMealRecipe = this.recipes.findRecipeByMeal(currentMeal);
+                                this.compareRecipes(currentMealRecipe);
+                            }
+                        }
+                        else if (this.importantDialogue.length != 0){
                             let message = this.importantDialogue.pop();
                             this.talk(message);
                         }
@@ -71,6 +83,7 @@ export default class Nova{
                             this.talk(this.basicDialogue[randIndex]);
                             this.previousDialogueIndex = randIndex;
                         }
+                        
                     }
                     
                 });
@@ -83,11 +96,67 @@ export default class Nova{
      * Initialises Nova's favourite and random meal.
      */
     initialiseFavorite(){
-        let recipes = new Recipes();
-        let recipesArr = recipes.recipes;
+        let recipesArr = this.recipes.getRecipes();
         let randIndex = Math.floor(Math.random() * recipesArr.length);
-        this.favoriteMeal = recipesArr[randIndex];
+        this.favoriteMeal = recipesArr[randIndex]; 
 
+    }
+
+    /**
+     * Compares Nova's favourite meal and the current recipe and says the similarities between recipes.
+     * @param {Dictionary} currentRecipe
+     */
+    compareRecipes(currentRecipe){
+        if (this.attemptsLeft > 0){
+            console.log(currentRecipe.ingredients);
+            console.log(this.favoriteMeal.ingredients);
+            let commonIngredients = [];
+            let usesSameAppliance = false;
+
+            for (let i = 0; i < currentRecipe.ingredients.length; i++){
+                for (let j = 0; j < currentRecipe.ingredients.length; j++){
+                    if (currentRecipe.ingredients[i] == this.favoriteMeal.ingredients[j]){
+                        commonIngredients.push(currentRecipe.ingredients[i]);
+                        break;
+                    }
+                }
+            }
+
+            if (this.favoriteMeal.appliance == currentRecipe.appliance){
+                usesSameAppliance = true;
+            }
+
+            if (this.favoriteMeal.ingredients.includes(currentRecipe.meal)){
+                this.talk("ooh, use this in another meal")
+            }
+            else {
+                switch (commonIngredients.length) {
+                    case 3:
+                        if (usesSameAppliance){
+                            this.talk("oh, wow! this is it!")
+                        }
+                        else{
+                            this.talk("i love everything you put! er, change something");
+                        }
+                        break;
+                    case 2:
+                        this.talk("i love the " + commonIngredients[0].toLowerCase() + " and " + commonIngredients[1].toLowerCase() + " in this");
+                        break;
+                    case 1:
+                        this.talk("i only like the " + commonIngredients[0].toLowerCase() + " in this");
+                        break;
+                    default:
+                        this.talk("i hate the taste of this");
+                        break;
+                }
+            }
+            
+
+            this.attemptsLeft--;
+        }
+        else{
+            this.talk("i hate the food here. i'm leaving");
+        }
     }
 
     /**

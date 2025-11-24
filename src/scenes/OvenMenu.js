@@ -124,8 +124,8 @@ export default class OvenMenu extends Phaser.Scene {
             ingredientNames.push(ing[0]);
         });
 
-        if (this.recipes.findRecipe(ingredientNames, "Oven") != null){
-            recipe = this.recipes.findRecipe(ingredientNames, "Oven");
+        if (this.recipes.findRecipeByIngredients(ingredientNames, "Oven") != null){
+            recipe = this.recipes.findRecipeByIngredients(ingredientNames, "Oven");
             this.inventory.addIngredient(recipe.meal, recipe.mealIcon);
 
             this.scene.get("Hotbar").showMessage(recipe.meal + "!!", "achievement")
