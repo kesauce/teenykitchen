@@ -6,6 +6,7 @@ import Hotbar from './scenes/Hotbar.js';
 import StoveMenu from './scenes/StoveMenu.js';
 import CounterMenu from './scenes/CounterMenu.js';
 import OvenMenu from './scenes/OvenMenu.js';
+import NovaMenu from './scenes/NovaMenu.js';
 
 // Creating constant variables
 const sizes = {
@@ -27,7 +28,7 @@ const config = {
             debug: false
         }
     },
-	scene: [Kitchen, FridgeMenu, Hotbar, StoveMenu, CounterMenu, OvenMenu]
+	scene: [Kitchen, FridgeMenu, Hotbar, StoveMenu, CounterMenu, OvenMenu, NovaMenu]
 
 }
 

@@ -60,32 +60,38 @@ export default class Nova{
                 this.talk("go on...")
 
                 this.zone = this.scene.add.zone(320, 255, 100, 120).setOrigin(0, 0).setInteractive({ useHandCursor: true }).setDepth(5);
-                this.zone.on('pointerdown', () => {
-                    if (!this.isTalking){
-                        let currentMeal = this.inventory.getSelectedIngredient();
-                        if (currentMeal != null){
-                            if (currentMeal == "Rocks"){ this.talk("i'm not eating that"); }
-                            else if (!this.recipes.mealExists(currentMeal)){ this.talk("prepare it for me"); }
-                            else{
-                                let currentMealRecipe = this.recipes.findRecipeByMeal(currentMeal);
-                                this.compareRecipes(currentMealRecipe);
-                            }
-                        }
-                        else if (this.importantDialogue.length != 0){
-                            let message = this.importantDialogue.pop();
-                            this.talk(message);
-                        }
-                        else{
-                            let randIndex = Math.floor(Math.random() * this.basicDialogue.length);
-                            while(randIndex == this.previousDialogueIndex){
-                                randIndex = Math.floor(Math.random() * this.basicDialogue.length);
-                            }
-                            this.talk(this.basicDialogue[randIndex]);
-                            this.previousDialogueIndex = randIndex;
-                        }
-                        
+                this.zone.on('pointerdown', (pointer) => {
+                    if (pointer.rightButtonDown()){
+                        this.scene.scene.launch("NovaMenu");
+                        this.scene.scene.bringToTop("NovaMenu");
+                        this.scene.scene.bringToTop("Hotbar"); 
                     }
-                    
+                    else{
+                        if (!this.isTalking){
+                            let currentMeal = this.inventory.getSelectedIngredient();
+                            if (currentMeal != null){
+                                if (currentMeal == "Rocks"){ this.talk("i'm not eating that"); }
+                                else if (!this.recipes.mealExists(currentMeal)){ this.talk("prepare it for me"); }
+                                else{
+                                    let currentMealRecipe = this.recipes.findRecipeByMeal(currentMeal);
+                                    this.compareRecipes(currentMealRecipe);
+                                }
+                            }
+                            else if (this.importantDialogue.length != 0){
+                                let message = this.importantDialogue.pop();
+                                this.talk(message);
+                            }
+                            else{
+                                let randIndex = Math.floor(Math.random() * this.basicDialogue.length);
+                                while(randIndex == this.previousDialogueIndex){
+                                    randIndex = Math.floor(Math.random() * this.basicDialogue.length);
+                                }
+                                this.talk(this.basicDialogue[randIndex]);
+                                this.previousDialogueIndex = randIndex;
+                            }
+                            
+                        }
+                    }
                 });
             }
         });
@@ -136,7 +142,7 @@ export default class Nova{
                             this.talk("oh, wow! this is it!")
                         }
                         else{
-                            this.talk("i love everything you put! er, change something");
+                            this.talk("this is so close. the chemistry is off");
                         }
                         break;
                     case 2:
@@ -151,6 +157,7 @@ export default class Nova{
                 }
             }
             
+            this.inventory.removeIngredient(this.inventory.getSelectedIndex());
 
             this.attemptsLeft--;
         }
